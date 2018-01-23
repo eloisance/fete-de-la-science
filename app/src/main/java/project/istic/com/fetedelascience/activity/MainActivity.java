@@ -2,6 +2,9 @@ package project.istic.com.fetedelascience.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,6 +41,24 @@ public class MainActivity extends AppCompatActivity {
         if (prefManager.isFirstTimeLaunch()) {
             initDatabase();
             prefManager.setFirstTimeLaunchToFalse();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_icon_map:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

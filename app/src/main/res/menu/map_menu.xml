@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_icon_list"
+        android:icon="@drawable/ic_list_24dp"
+        android:title="@string/menu_icon_list"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_icon_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/menu_icon_search"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_icon_settings"
+        android:title="@string/menu_icon_settings"
+        app:showAsAction="never" />
+
+</menu>
