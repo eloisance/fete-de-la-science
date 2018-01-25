@@ -2,11 +2,17 @@ package project.istic.com.fetedelascience.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -20,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,6 +36,7 @@ import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
+import project.istic.com.fetedelascience.model.Route;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +53,28 @@ public class MainActivity extends AppCompatActivity {
         // Mandatory
         ButterKnife.bind(this);
 
-        hello.setText("Hello MotherFucker");
+        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("routes");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Route Route = postSnapshot.getValue(Route.class);
+                    Log.i("Message",Route.getId());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Merde", "loadPost:onCancelled", databaseError.toException());
+            }
+
+
+        });
+
+        */
 
         prefManager = new PrefManager(this);
 
