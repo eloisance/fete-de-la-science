@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +22,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.global.PrefManager;
@@ -29,12 +32,20 @@ import project.istic.com.fetedelascience.model.Event;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.myTextView)
+    TextView hello;
+
     private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Mandatory
+        ButterKnife.bind(this);
+
+        hello.setText("Hello MotherFucker");
 
         prefManager = new PrefManager(this);
 
