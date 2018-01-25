@@ -1,5 +1,7 @@
 package project.istic.com.fetedelascience.activity;
 
+import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -77,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(this);
 
-        if (prefManager.isFirstTimeLaunch()) {
+        if (prefManager.isFirstTimeLaunch() || true) {
             initDatabase();
             prefManager.setFirstTimeLaunchToFalse();
         }
+
+        Fragment listFragment = new ListFragment();
     }
 
     @Override
