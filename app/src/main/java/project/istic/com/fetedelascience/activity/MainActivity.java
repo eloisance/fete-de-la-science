@@ -1,14 +1,13 @@
 package project.istic.com.fetedelascience.activity;
 
-import android.app.Fragment;
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,10 +30,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.global.Constants;
+import project.istic.com.fetedelascience.fragment.ListviewFragment;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
@@ -42,17 +39,12 @@ import project.istic.com.fetedelascience.model.Route;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    @BindView(R.id.myTextView)
-    TextView hello;
-
     private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
         /*FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("routes");
@@ -79,12 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(this);
 
-        if (prefManager.isFirstTimeLaunch() || true) {
+        if (prefManager.isFirstTimeLaunch()) {
             initDatabase();
             prefManager.setFirstTimeLaunchToFalse();
         }
 
-        Fragment listFragment = new ListFragment();
+        Fragment listFragment = new ListviewFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, listFragment)
+                .commit();
     }
 
     @Override

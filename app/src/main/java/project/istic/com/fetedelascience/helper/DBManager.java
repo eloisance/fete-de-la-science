@@ -11,7 +11,7 @@ import project.istic.com.fetedelascience.model.Event;
 
 public class DBManager {
 
-    private SQLiteHelper  helper;
+    private SQLiteHelper helper;
     private static DBManager instance;
 
     public static void init(Context context) {
