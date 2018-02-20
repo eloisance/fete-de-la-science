@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Splashscreen -->
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -18,6 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Tutorial activity -->
+        <activity
+            android:name=".activity.TutorialActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
+        <!-- Main activity -->
         <activity android:name=".activity.MainActivity"></activity>
     </application>
 

@@ -2,6 +2,7 @@ package project.istic.com.fetedelascience.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,14 +22,16 @@ import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
 
-public class DataAsyncTask extends AsyncTask<Void, Integer, Void> {
+public class DataAsyncTask extends AsyncTask<Void, Double, Void> {
 
     private Context context;
     private DBManager manager;
+    private OnDataLoaded listener;
 
-    public DataAsyncTask(Context c, DBManager m) {
+    public DataAsyncTask(Context c, DBManager m, OnDataLoaded l) {
         this.context = c;
         this.manager = m;
+        this.listener = l;
     }
 
     @Override
@@ -55,26 +58,30 @@ public class DataAsyncTask extends AsyncTask<Void, Integer, Void> {
                     JSONObject fields = one.getJSONObject("fields");
                     JsonElement item = jsonParser.parse(fields.toString());
                     Event event = gson.fromJson(item, Event.class);
-                    System.out.println("event:" + event);
+                    Log.d("efdsf", event.toString());
                     this.manager.createEvent(event);
-                    publishProgress(i);
+                    // update progress
+                    Integer current = (100 * i) / json.length();
+                    publishProgress(Double.valueOf(current));
                 }
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
     @Override
-    protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
+    protected void onProgressUpdate(Double... values) {
+        super.onProgressUpdate(values[0]);
+        listener.onDataProgress(values[0]);
     }
 
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
+        listener.onDataLoaded();
     }
-
 
 }

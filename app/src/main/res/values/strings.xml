@@ -2,6 +2,10 @@
     <!-- Global -->
     <string name="app_name">FeteDeLaScience</string>
 
+    <!-- Tutorial -->
+    <string name="tutorial_next">Suivant</string>
+    <string name="tutorial_end">Terminé</string>
+
     <!-- Menu -->
     <string name="menu_icon_list">View in list</string>
     <string name="menu_icon_map">View in map</string>

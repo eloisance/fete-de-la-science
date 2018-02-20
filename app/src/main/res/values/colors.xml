@@ -5,4 +5,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="tutorial_bg">@color/colorPrimaryDark</color>
+    <color name="tutorial_dot_inactive">#64ffffff</color>
+    <color name="tutorial_dot_active">#ffffff</color>
+
 </resources>
