@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setFragment(new ListviewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_settings:
-                setFragment(new ListviewFragment(), (String) item.getTitle());
+                openActivity(SettingsActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
                 break;
             default:
                 break;

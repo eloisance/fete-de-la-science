@@ -40,10 +40,9 @@
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <!-- Map activity -->
         <activity android:name=".activity.MapActivity" />
-
         <activity android:name=".activity.DetailEventActivity" />
+        <activity android:name=".activity.SettingsActivity" />
 
     </application>
 
