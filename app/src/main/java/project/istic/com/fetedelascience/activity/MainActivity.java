@@ -1,5 +1,6 @@
 package project.istic.com.fetedelascience.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -105,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment listviewFragment = new ListviewFragment();
         setFragment(listviewFragment, "Liste");
         this.onNavigationItemSelected(navigationView.getMenu().getItem(0));
+
+        Intent intent = new Intent(MainActivity.this, DetailEventActivity.class);
+        intent.putExtra("Event",events.get(4));
+        startActivity(intent);
     }
 
     @Override
