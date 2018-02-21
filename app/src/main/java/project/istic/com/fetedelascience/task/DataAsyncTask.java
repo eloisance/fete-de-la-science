@@ -72,6 +72,17 @@ public class DataAsyncTask extends AsyncTask<Void, Double, Void> {
                         try{
                             Integer.parseInt(id);
                             Event event = gson.fromJson(item, Event.class);
+                            JSONArray geolocalisation=null;
+                            try{
+                                // on verifie que l'evenement comporte une geolocalisation
+                                geolocalisation = fields.getJSONArray("geolocalisation");
+                                event.setLatitude((Double) geolocalisation.get(0));
+                                event.setLongitude((Double) geolocalisation.get(1));
+                            }catch(JSONException e){
+
+                            }
+
+
                             this.manager.createEvent(event);
                         } catch(NumberFormatException e) {
 
