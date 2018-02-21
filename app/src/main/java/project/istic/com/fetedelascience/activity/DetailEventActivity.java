@@ -5,6 +5,7 @@ import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.model.Event;
 
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,7 +58,9 @@ public class DetailEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_event);
         ButterKnife.bind(this);
-        idUser = "Dd";
+        idUser = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
         setTitle("Détail event");
         if(getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
