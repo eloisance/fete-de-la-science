@@ -1,6 +1,5 @@
 package project.istic.com.fetedelascience.adapter;
 
-// https://gist.github.com/guilhermekrz/504ea775ad3e15932836
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 
@@ -9,7 +8,6 @@ import com.j256.ormlite.stmt.PreparedQuery;
 
 import java.sql.SQLException;
 
-// Based on https://github.com/j256/ormlite-android/pull/8
 public abstract class OrmliteCursorRecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends CursorRecyclerViewAdapter<VH> {
     protected PreparedQuery<T> preparedQuery;
 

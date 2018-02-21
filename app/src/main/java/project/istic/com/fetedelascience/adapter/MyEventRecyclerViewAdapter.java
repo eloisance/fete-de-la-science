@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -15,7 +18,7 @@ import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.activity.DetailEventActivity;
 import project.istic.com.fetedelascience.model.Event;
 
-public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyEventRecyclerViewAdapter.ViewHolder> {
+public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyEventRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private Context context;
 
@@ -60,4 +63,24 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
             mCity = (TextView) view.findViewById(R.id.event_city);
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults filterResults = new FilterResults();
+                Log.d("ds", "performFiltering");
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                // contactListFiltered = (ArrayList<Contact>) filterResults.values;
+                Log.d("ds", "publishResults");
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 }
