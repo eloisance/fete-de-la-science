@@ -40,13 +40,16 @@ public class DetailEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_event);
         ButterKnife.bind(this);
 
-        event = this.getIntent().getParcelableExtra("Event");
+        event = this.getIntent().getParcelableExtra("event");
 //        Picasso.with(getBaseContext()).load(this.event.getApercu()).into(imageEvent);
-
-        this.title.setText(event.getTitle());
-        this.description.setText(event.getDescription());
-        this.adresse.setText(event.getAdresse());
-        this.horaire.setText(event.getResume_dates_fr());
-        this.lien.setText(event.getLien());
+        if(event == null) {
+            finish();
+        }else {
+            this.title.setText(event.getTitle());
+            this.description.setText(event.getDescription());
+            this.adresse.setText(event.getAdresse());
+            this.horaire.setText(event.getResume_dates_fr());
+            this.lien.setText(event.getLien());
+        }
     }
 }

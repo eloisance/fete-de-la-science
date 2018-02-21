@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setFragment(listviewFragment, "Liste");
         this.onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
-        Intent intent = new Intent(MainActivity.this, DetailEventActivity.class);
-        intent.putExtra("Event",events.get(4));
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, DetailEventActivity.class);
+//        intent.putExtra("Event",events.get(4));
+//        startActivity(intent);
     }
 
     @Override

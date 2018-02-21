@@ -47,7 +47,7 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
 
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
-        if ( !prefManager.isFirstTimeLaunch()) {
+        if ( false && !prefManager.isFirstTimeLaunch()) {
             startMainActivity();
 
         } else {
