@@ -1,7 +1,9 @@
 package project.istic.com.fetedelascience.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.fragment.ListviewFragment;
+import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setFragment(new ListviewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_map:
-                setFragment(new ListviewFragment(), (String) item.getTitle());
+                openActivity(MapActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
                 break;
             case R.id.drawer_menu_route:
                 setFragment(new ListviewFragment(), (String) item.getTitle());
@@ -167,6 +170,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    /**
+     * Ouvre l'activity passé en paramètre
+     * @param activity à ouvrir
+     * @param delay temps à attendre en ms avant d'ouvrir l'activity
+     */
+    private void openActivity(final Class<? extends Activity> activity, final Integer delay) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, activity);
+                startActivity(intent);
+            }
+        }, delay);
     }
 
     @Override
