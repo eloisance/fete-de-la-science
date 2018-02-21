@@ -39,4 +39,5 @@ public class MapItem implements ClusterItem {
     public String getSnippet() {
         return mSnippet;
     }
+    
 }

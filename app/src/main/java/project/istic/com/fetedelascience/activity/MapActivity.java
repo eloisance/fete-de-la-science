@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
@@ -23,9 +27,11 @@ import project.istic.com.fetedelascience.model.Event;
  * Created by jnsll on 21/02/18.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, ClusterManager.OnClusterClickListener<MapItem>, ClusterManager.OnClusterItemClickListener<MapItem> {
 
     //@BindView(R.id.map) SupportMapFragment map;
+    SupportMapFragment mapFragment;
+    private GoogleMap mMap;
     List<Event> events;
 
     // Declare a variable for the cluster manager.
@@ -44,15 +50,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        this.mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        this.mapFragment.getMapAsync(this);
 
         // Get events
         DBManager.init(this);
         DBManager manager = DBManager.getInstance();
         events = manager.getAllEvents();
-        Log.d("truc", events.get(0).toString());
     }
 
     @Override
@@ -70,10 +75,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         int i = 0;
-        setUpClusterer(googleMap);
+        setUpClusterer(mMap);
         for (Event event : events) {
             Double lat = event.getLatitude();
             Double longitude = event.getLongitude();
@@ -84,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 atelier = new LatLng(lat, longitude);
 //                googleMap.addMarker(new MarkerOptions().position(atelier)
 //                        .title(title));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
                 MapItem item = new MapItem(lat, longitude, title, null);
                 mClusterManager.addItem(item);
                 //i++;
@@ -124,6 +130,45 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //        // Add cluster items (markers) to the cluster manager.
 //        //addItems();
     }
+
+//    @Override
+//    public boolean onClusterItemClick(MapItem item) {
+//        // Does nothing, but you could go into the user's profile page, for example.
+//        return false;
+//    }
+
+
+    @Override
+    public boolean onClusterClick(Cluster<MapItem> cluster) {
+        // Show a toast with some info when the cluster is clicked.
+        Log.d("CLUSTER", cluster.getItems().toString()); //String title =
+        Toast.makeText(this, cluster.getSize() + " (including " + "title" + ")", Toast.LENGTH_SHORT).show();
+        // Create the builder to collect all essential cluster items for the bounds.
+        LatLngBounds.Builder builder = LatLngBounds.builder();
+        for (ClusterItem item : cluster.getItems()) {
+            Log.d("ITEM", item.getTitle());
+            builder.include(item.getPosition());
+        }
+        // Get the LatLngBounds
+        final LatLngBounds bounds = builder.build();
+
+        // Animate camera to the bounds
+        try {
+            this.mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onClusterItemClick(MapItem item) {
+        // Does nothing, but you could go into the user's profile page, for example.
+        Log.v("MARK", item.getTitle().toString());
+        return true;
+    }
+
+
 //
 //    private void addItems() {
 //
