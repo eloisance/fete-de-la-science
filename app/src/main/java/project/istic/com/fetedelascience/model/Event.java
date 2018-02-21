@@ -7,13 +7,17 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "event")
 public class Event {
 
-    @DatabaseField(generatedId = true)
+    @DatabaseField
+    @SerializedName("identifiant")
     private int id;
 
     @DatabaseField()
-    @SerializedName("title_fr")
+    @SerializedName("titre_fr")
     private String title;
 
+    /**
+     * Peut être null
+     */
     @DatabaseField
     private String apercu;
 

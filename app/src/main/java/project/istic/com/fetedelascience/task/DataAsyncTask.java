@@ -1,6 +1,8 @@
 package project.istic.com.fetedelascience.task;
 
 import android.content.Context;
+import android.icu.text.DecimalFormat;
+import android.net.ParseException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.helper.DBManager;
@@ -51,18 +54,35 @@ public class DataAsyncTask extends AsyncTask<Void, Double, Void> {
             String line;
             while ((line = reader.readLine()) != null) {
                 JSONArray json = new JSONArray(line);
+
                 // For each item event, get fields item and create Event model
                 // from it to create new entry in database
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject one = json.getJSONObject(i);
                     JSONObject fields = one.getJSONObject("fields");
                     JsonElement item = jsonParser.parse(fields.toString());
-                    Event event = gson.fromJson(item, Event.class);
-                    Log.d("efdsf", event.toString());
-                    this.manager.createEvent(event);
+                    String id = null;
+                    try{
+                        // on verifie que l'evenement comporte un id
+                        id = (String) fields.get("identifiant");
+                    }catch(JSONException e){
+
+                    }
+                    if(id != null && !id.equals("")){
+                        try{
+                            Integer.parseInt(id);
+                            Event event = gson.fromJson(item, Event.class);
+                            this.manager.createEvent(event);
+                        } catch(NumberFormatException e) {
+
+                        }
+                    }
+
                     // update progress
-                    Integer current = (100 * i) / json.length();
-                    publishProgress(Double.valueOf(current));
+
+                    Double current = (double) Math.round(((double)(100 * i+1) / json.length()) * 10 ) / 10;
+
+                    publishProgress(current);
                 }
             }
         } catch (IOException | JSONException e) {
