@@ -1,5 +1,7 @@
 package project.istic.com.fetedelascience.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,12 +13,16 @@ import android.widget.TextView;
 import com.j256.ormlite.stmt.PreparedQuery;
 
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.activity.DetailEventActivity;
 import project.istic.com.fetedelascience.model.Event;
 
 public class MyInspectionRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyInspectionRecyclerViewAdapter.ViewHolder> {
 
-    public MyInspectionRecyclerViewAdapter(Cursor cursor, PreparedQuery<Event> preparedQuery) {
+    private Context context;
+
+    public MyInspectionRecyclerViewAdapter(Context c, Cursor cursor, PreparedQuery<Event> preparedQuery) {
         super(cursor, preparedQuery);
+        this.context = c;
     }
 
     @Override
@@ -27,9 +33,18 @@ public class MyInspectionRecyclerViewAdapter extends OrmliteCursorRecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, Event event) {
+    public void onBindViewHolder(final ViewHolder holder, final Event event) {
         holder.mEvent = event;
         holder.mTitle.setText(event.getTitle());
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailEventActivity.class);
+                intent.putExtra("event", event);
+                context.startActivity(intent);
+            }
+        });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

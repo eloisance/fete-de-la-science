@@ -65,7 +65,7 @@ public class ListviewFragment extends Fragment {
             e.printStackTrace();
         }
 
-        mAdapter = new MyInspectionRecyclerViewAdapter(cursor, preparedQuery);
+        mAdapter = new MyInspectionRecyclerViewAdapter(getContext(), cursor, preparedQuery);
         mRecycler.setAdapter(mAdapter);
 
         return rootView;
