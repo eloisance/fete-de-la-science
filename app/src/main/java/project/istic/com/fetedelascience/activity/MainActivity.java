@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer != null) {
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navdrawer_open, R.string.navdrawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
         }
@@ -149,6 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setFragment(new ListviewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_map:
+                setFragment(new ListviewFragment(), (String) item.getTitle());
+                break;
+            case R.id.drawer_menu_route:
                 setFragment(new ListviewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_settings:

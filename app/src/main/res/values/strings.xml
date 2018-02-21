@@ -7,8 +7,12 @@
     <string name="tutorial_end">Terminé</string>
 
     <!-- Navigation drawer -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navdrawer_open">Open navigation drawer</string>
+    <string name="navdrawer_close">Close navigation drawer</string>
+    <string name="navdrawer_list">Liste des événements</string>
+    <string name="navdrawer_map">Carte des événements</string>
+    <string name="navdrawer_route">Parcours</string>
+    <string name="navdrawer_settings">Paramètres</string>
 
     <!-- Menu -->
     <string name="menu_icon_list">View in list</string>

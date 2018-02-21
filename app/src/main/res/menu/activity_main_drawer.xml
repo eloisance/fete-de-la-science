@@ -6,13 +6,18 @@
         android:id="@+id/group_1">
         <item
             android:id="@+id/drawer_menu_liste"
-            android:title="Vue en liste"
+            android:title="@string/navdrawer_list"
             android:icon="@drawable/ic_navdrawer_list_24dp"
             android:checked="false" />
         <item
             android:id="@+id/drawer_menu_map"
-            android:title="Vue en map"
+            android:title="@string/navdrawer_map"
             android:icon="@drawable/ic_navdrawer_map_24dp"
+            android:checked="false" />
+        <item
+            android:id="@+id/drawer_menu_route"
+            android:title="@string/navdrawer_route"
+            android:icon="@drawable/ic_navdrawer_route_24dp"
             android:checked="false" />
     </group>
 
@@ -20,7 +25,7 @@
         android:id="@+id/group_2">
         <item
             android:id="@+id/drawer_menu_settings"
-            android:title="Paramètres"
+            android:title="@string/navdrawer_settings"
             android:icon="@drawable/ic_navdrawer_settings_24dp"
             android:checked="false" />
     </group>
