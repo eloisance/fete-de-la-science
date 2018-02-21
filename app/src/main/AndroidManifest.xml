@@ -18,7 +18,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
         <!-- Splashscreen -->
         <activity
             android:name=".activity.SplashActivity"
@@ -38,8 +37,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.MainActivity"></activity>
 
+        <!-- Map activity -->
         <activity android:name=".activity.MapActivity"></activity>
 
     </application>

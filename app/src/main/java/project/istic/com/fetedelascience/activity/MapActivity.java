@@ -16,16 +16,20 @@ import project.istic.com.fetedelascience.R;
  * Created by jnsll on 21/02/18.
  */
 
-public class MapActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     //@BindView(R.id.map) SupportMapFragment map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_map);
+
+        setTitle("Maps");
+        if(getSupportActionBar() != null) {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
