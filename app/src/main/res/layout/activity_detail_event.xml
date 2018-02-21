@@ -102,6 +102,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/headerLienEvent"
                 tools:layout_editor_absoluteX="16dp" />
 
+            <RatingBar
+                android:id="@+id/notation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lien_event" />
+
+            <TextView
+                android:id="@+id/noteGlobale"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notation" />
+
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>

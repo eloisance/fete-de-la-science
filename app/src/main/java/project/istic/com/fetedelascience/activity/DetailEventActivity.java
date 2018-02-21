@@ -7,14 +7,24 @@ import project.istic.com.fetedelascience.model.Event;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class DetailEventActivity extends AppCompatActivity {
+
+    private static String idUser;
     @BindView(R.id.title_event)
     TextView title;
 
@@ -30,6 +40,12 @@ public class DetailEventActivity extends AppCompatActivity {
     @BindView(R.id.lien_event)
     TextView lien;
 
+    @BindView(R.id.notation)
+    RatingBar notation;
+
+    @BindView(R.id.noteGlobale)
+    TextView noteGlobale;
+
 //    @BindView(R.id.imageEvent)
 //    ImageView imageEvent;
 
@@ -37,10 +53,11 @@ public class DetailEventActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_event);
         ButterKnife.bind(this);
-
+        idUser = "Dd";
         setTitle("Détail event");
         if(getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,13 +67,19 @@ public class DetailEventActivity extends AppCompatActivity {
 //        Picasso.with(getBaseContext()).load(this.event.getApercu()).into(imageEvent);
         if(event == null) {
             finish();
-        }else {
-            this.title.setText(event.getTitle());
-            this.description.setText(event.getDescription());
-            this.adresse.setText(event.getAdresse());
-            this.horaire.setText(event.getResume_dates_fr());
-            this.lien.setText(event.getLien());
+            return;
         }
+        this.getMyNote();
+        this.addListenerRatingBar();
+        this.noteGlobaleUpdate();
+        this.title.setText(event.getTitle());
+        this.description.setText(event.getDescription());
+        this.adresse.setText(event.getAdresse());
+        this.horaire.setText(event.getResume_dates_fr());
+        this.lien.setText(event.getLien());
+
+
+
     }
 
     @Override
@@ -68,5 +91,83 @@ public class DetailEventActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void addListenerRatingBar(){
+        this.notation.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("notation");
+                myRef.child(event.getId()+"").child(idUser+"").setValue(""+rating);
+
+
+
+            }
+        });
+
+    }
+
+    private void noteGlobaleUpdate(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("notation");
+        myRef.child(event.getId()+"").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                HashMap<String,String> notes = (HashMap<String,String>)dataSnapshot.getValue();
+                if(notes == null){
+                    noteGlobale.setText("Pas encore de note");
+                } else {
+                    double noteMoyenne = 0;
+                    for(HashMap.Entry<String, String> entry : notes.entrySet()) {
+                        String note = entry.getValue();
+                        if (note != null) {
+                            noteMoyenne += Double.parseDouble(note);
+                        }
+                    }
+//                    for(String note : notes){
+//                        if (note != null) {
+//                            noteMoyenne += Double.parseDouble(note);
+//                        }
+//                    }
+
+                    noteGlobale.setText("Note moyenne "+ noteMoyenne / (notes.size() ) );
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+    }
+
+    private void getMyNote(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("notation").child(event.getId()+"").child(idUser+"");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               Object snap = dataSnapshot.getValue();
+               if(snap != null ) {
+                   double note = Double.parseDouble((String) snap);
+                   notation.setRating((float) note);
+                   myRef.removeEventListener(this);
+               }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
     }
 }

@@ -72,28 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         }
 
-        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("routes");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Route Route = postSnapshot.getValue(Route.class);
-                    Log.i("Message",Route.getId());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("Merde", "loadPost:onCancelled", databaseError.toException());
-            }
-
-
-        });
-
-        */
 
         DBManager.init(this);
         DBManager manager = DBManager.getInstance();
@@ -110,9 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setFragment(listviewFragment, "Liste");
         this.onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
-//        Intent intent = new Intent(MainActivity.this, DetailEventActivity.class);
-//        intent.putExtra("Event",events.get(4));
-//        startActivity(intent);
     }
 
     @Override
