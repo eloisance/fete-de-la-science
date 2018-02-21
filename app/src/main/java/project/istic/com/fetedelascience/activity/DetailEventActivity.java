@@ -7,6 +7,7 @@ import project.istic.com.fetedelascience.model.Event;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +41,11 @@ public class DetailEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_event);
         ButterKnife.bind(this);
 
+        setTitle("Détail event");
+        if(getSupportActionBar() != null) {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         event = this.getIntent().getParcelableExtra("event");
 //        Picasso.with(getBaseContext()).load(this.event.getApercu()).into(imageEvent);
         if(event == null) {
@@ -50,6 +56,17 @@ public class DetailEventActivity extends AppCompatActivity {
             this.adresse.setText(event.getAdresse());
             this.horaire.setText(event.getResume_dates_fr());
             this.lien.setText(event.getLien());
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
