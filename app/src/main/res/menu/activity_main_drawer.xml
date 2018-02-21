@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_1">
+        <item
+            android:id="@+id/drawer_menu_liste"
+            android:title="Vue en liste"
+            android:icon="@drawable/ic_navdrawer_list_24dp"
+            android:checked="false" />
+        <item
+            android:id="@+id/drawer_menu_map"
+            android:title="Vue en map"
+            android:icon="@drawable/ic_navdrawer_map_24dp"
+            android:checked="false" />
+    </group>
+
+    <group
+        android:id="@+id/group_2">
+        <item
+            android:id="@+id/drawer_menu_settings"
+            android:title="Paramètres"
+            android:icon="@drawable/ic_navdrawer_settings_24dp"
+            android:checked="false" />
+    </group>
+
+</menu>

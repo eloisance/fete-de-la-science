@@ -6,6 +6,10 @@
     <string name="tutorial_next">Suivant</string>
     <string name="tutorial_end">Terminé</string>
 
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!-- Menu -->
     <string name="menu_icon_list">View in list</string>
     <string name="menu_icon_map">View in map</string>

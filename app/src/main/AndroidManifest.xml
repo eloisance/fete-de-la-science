@@ -25,7 +25,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme" />
         <!-- Main activity -->
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
