@@ -37,6 +37,8 @@
         <!-- Main activity -->
         <activity android:name=".activity.MainActivity"></activity>
 
+        <activity android:name=".activity.MapActivity"></activity>
+
     </application>
 
 </manifest>
