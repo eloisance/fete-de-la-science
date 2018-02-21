@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "event")
 public class Event implements Parcelable {
 
-    @DatabaseField
+    @DatabaseField(id = true)
     @SerializedName("identifiant")
     private int id;
 

@@ -6,37 +6,104 @@
     android:layout_height="match_parent"
     tools:context="project.istic.com.fetedelascience.activity.DetailEventActivity">
 
-    <TextView
-        android:id="@+id/title_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="16dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/description_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="100dp" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/horaire_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/description_event"
-        tools:layout_editor_absoluteX="16dp" />
+            <TextView
+                android:id="@+id/title_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/lien_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/horaire_event"
-        tools:layout_editor_absoluteX="16dp" />
+            <TextView
+                android:id="@+id/description_event"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintTop_toBottomOf="@+id/title_event"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/headerAdresseEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/headerAddresse"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@+id/description_event"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/adresse_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="TextView"
+                app:layout_constraintTop_toBottomOf="@+id/headerAdresseEvent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/headerHoraireEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/headerHoraire"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@+id/adresse_event"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/horaire_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="TextView"
+                app:layout_constraintTop_toBottomOf="@+id/headerHoraireEvent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/headerLienEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/headerLien"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@+id/horaire_event"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/lien_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:autoLink="web"
+                android:text="TextView"
+                android:textColorLink="@color/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@+id/headerLienEvent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

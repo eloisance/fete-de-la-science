@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
@@ -47,59 +45,60 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
 
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
-        if (false && !prefManager.isFirstTimeLaunch()) {
+        if ( false && !prefManager.isFirstTimeLaunch()) {
             startMainActivity();
-            finish();
-        }
 
-        setContentView(R.layout.activity_tutorial);
+        } else {
 
-        // Set to true, after loading data from AsyncTask!
-        readyToGo = false;
+            setContentView(R.layout.activity_tutorial);
 
-        // Start load data
-        DBManager.init(this);
-        DBManager manager = DBManager.getInstance();
-        DataAsyncTask task = new DataAsyncTask(getApplicationContext(), manager, this);
-        task.execute();
+            // Set to true, after loading data from AsyncTask!
+            readyToGo = false;
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        progress = (TextView) findViewById(R.id.progress);
-        btnNext = (Button) findViewById(R.id.btn_next);
+            // Start load data
+            DBManager.init(this);
+            DBManager manager = DBManager.getInstance();
+            DataAsyncTask task = new DataAsyncTask(getApplicationContext(), manager, this);
+            task.execute();
 
-        // layouts of all tutorials sliders
-        layouts = new int[] {
-                R.layout.slide_tutorial_1,
-                R.layout.slide_tutorial_2,
-                R.layout.slide_tutorial_3
-        };
+            viewPager = (ViewPager) findViewById(R.id.view_pager);
+            dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+            progress = (TextView) findViewById(R.id.progress);
+            btnNext = (Button) findViewById(R.id.btn_next);
 
-        // adding bottom dots
-        addBottomDots(0);
+            // layouts of all tutorials sliders
+            layouts = new int[]{
+                    R.layout.slide_tutorial_1,
+                    R.layout.slide_tutorial_2,
+                    R.layout.slide_tutorial_3
+            };
 
-        myViewPagerAdapter = new MyViewPagerAdapter();
-        viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+            // adding bottom dots
+            addBottomDots(0);
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // checking for last page
-                // if last page home screen will be launched
-                int current = getItem(+1);
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                } else {
-                    if (readyToGo) {
-                        startMainActivity();
+            myViewPagerAdapter = new MyViewPagerAdapter();
+            viewPager.setAdapter(myViewPagerAdapter);
+            viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+            btnNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // checking for last page
+                    // if last page home screen will be launched
+                    int current = getItem(+1);
+                    if (current < layouts.length) {
+                        // move to next screen
+                        viewPager.setCurrentItem(current);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Les données ne sont pas encore prêtes !", Toast.LENGTH_LONG).show();
+                        if (readyToGo) {
+                            startMainActivity();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Les données ne sont pas encore prêtes !", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

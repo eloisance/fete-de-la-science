@@ -19,4 +19,10 @@
     <!-- ListViewFragmentment -->
     <string name="fragment_list_textview">Hello blank fragment</string>
 
+    <!--activity_detail_event-->
+    <string name="headerLien">Lien</string>
+    <string name="headerHoraire">Horaire</string>
+    <string name="headerAddresse">Adresse</string>
+    <string name="headerDescription">Description</string>
+
 </resources>

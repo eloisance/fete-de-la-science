@@ -10,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
@@ -77,15 +78,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Double lat = event.getLatitude();
             Double longitude = event.getLongitude();
             String title = event.getTitle();
-            //LatLng atelier = null;
-            setUpClusterer(googleMap);
+            LatLng atelier = null;
+            //setUpClusterer(googleMap);
             if (lat != null && longitude != null) {
-                //atelier = new LatLng(lat, longitude);
-//                googleMap.addMarker(new MarkerOptions().position(atelier)
-//                        .title(title));
-//                googleMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
-                MapItem item = new MapItem(lat, longitude, title, null);
-                mClusterManager.addItem(item);
+                atelier = new LatLng(lat, longitude);
+                googleMap.addMarker(new MarkerOptions().position(atelier)
+                        .title(title));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
+//                MapItem item = new MapItem(lat, longitude, title, null);
+//                mClusterManager.addItem(item);
                 //i++;
 //                if (i == 1) {
 //
@@ -107,38 +108,38 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
-    private void setUpClusterer(GoogleMap googleMap) {
-        // Position the map.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.859489,2.320582), 20));
-
-        // Initialize the manager with the context and the map.
-        // (Activity extends context, so we can pass 'this' in the constructor.)
-        mClusterManager = new ClusterManager<MapItem>(this, googleMap);
-
-        // Point the map's listeners at the listeners implemented by the cluster
-        // manager.
-        googleMap.setOnCameraIdleListener(mClusterManager);
-        googleMap.setOnMarkerClickListener(mClusterManager);
-
-        // Add cluster items (markers) to the cluster manager.
-        //addItems();
-    }
-
-    private void addItems() {
-
-        // Set some lat/lng coordinates to start with.
-        double lat = 48.859489;
-        double lng = 2.320582;
-
-        // Add ten cluster items in close proximity, for purposes of this example.
-        for (int i = 0; i < 20; i++) {
-            double offset = i / 60d;
-            lat = lat + offset;
-            lng = lng + offset;
-            MapItem offsetItem = new MapItem(lat, lng);
-            mClusterManager.addItem(offsetItem);
-        }
-    }
+//    private void setUpClusterer(GoogleMap googleMap) {
+//        // Position the map.
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.859489,2.320582), 20));
+//
+//        // Initialize the manager with the context and the map.
+//        // (Activity extends context, so we can pass 'this' in the constructor.)
+//        mClusterManager = new ClusterManager<MapItem>(this, googleMap);
+//
+//        // Point the map's listeners at the listeners implemented by the cluster
+//        // manager.
+//        googleMap.setOnCameraIdleListener(mClusterManager);
+//        googleMap.setOnMarkerClickListener(mClusterManager);
+//
+//        // Add cluster items (markers) to the cluster manager.
+//        //addItems();
+//    }
+//
+//    private void addItems() {
+//
+//        // Set some lat/lng coordinates to start with.
+//        double lat = 48.859489;
+//        double lng = 2.320582;
+//
+//        // Add ten cluster items in close proximity, for purposes of this example.
+//        for (int i = 0; i < 20; i++) {
+//            double offset = i / 60d;
+//            lat = lat + offset;
+//            lng = lng + offset;
+//            MapItem offsetItem = new MapItem(lat, lng);
+//            mClusterManager.addItem(offsetItem);
+//        }
+//    }
 
 
 }
