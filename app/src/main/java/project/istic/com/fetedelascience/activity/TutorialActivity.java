@@ -104,7 +104,6 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
 
     @Override
     public void onDataProgress(Double value) {
-        Log.d(TAG, "debug: " + value);
         progress.setText(value + "%");
     }
 

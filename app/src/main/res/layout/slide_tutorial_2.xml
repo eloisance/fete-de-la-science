@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="@dimen/tutorial_img_width_height"
             android:layout_height="@dimen/tutorial_img_width_height"
-            android:src="@drawable/ic_world_white_24dp"
+            android:src="@drawable/ic_tutorial_world_white_24dp"
             android:layout_marginBottom="@dimen/tutorial_img_margin_bottom" />
 
         <TextView
