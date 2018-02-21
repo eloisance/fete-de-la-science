@@ -2,6 +2,7 @@ package project.istic.com.fetedelascience.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +33,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         setTitle("Maps");
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -45,8 +46,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Get events
         DBManager.init(this);
         DBManager manager = DBManager.getInstance();
-
         events = manager.getAllEvents();
+        Log.d("truc", events.get(0).toString());
     }
 
     @Override
@@ -64,12 +65,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-//        for (Event event: events){
-//            LatLng atelier = new LatLng(-33.852, 151.211);
-//        }
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        for (Event event : events) {
+            Double lat = event.getLatitude();
+            Double longitude = event.getLongitude();
+            String title = event.getTitle();
+            LatLng atelier = null;
+            if (lat != null && longitude != null) {
+                atelier = new LatLng(lat, longitude);
+                googleMap.addMarker(new MarkerOptions().position(atelier)
+                        .title(title));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
+            }
+
+        }
+//        LatLng sydney = new LatLng(-33.852, 151.211);
+//        googleMap.addMarker(new MarkerOptions().position(sydney)
+//                .title("truc"));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
