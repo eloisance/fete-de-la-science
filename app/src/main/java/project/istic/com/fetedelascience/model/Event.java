@@ -11,9 +11,39 @@ public class Event {
     @SerializedName("identifiant")
     private int id;
 
-    @DatabaseField()
+    @DatabaseField
     @SerializedName("titre_fr")
     private String title;
+
+    @DatabaseField
+    @SerializedName("ville")
+    private String ville;
+
+    @DatabaseField
+    @SerializedName("adresse")
+    private String adresse;
+
+    @DatabaseField
+    @SerializedName("lien")
+    private String lien;
+
+    @DatabaseField
+    @SerializedName("description_longue_fr")
+    private String description;
+
+    @DatabaseField
+    @SerializedName("date_debut")
+    private String date_debut;
+
+    @DatabaseField
+    @SerializedName("date_fin")
+    private String date_fin;
+
+    @DatabaseField
+    private Double longitude;
+
+    @DatabaseField
+    private Double latitude;
 
     /**
      * Peut être null
@@ -23,8 +53,15 @@ public class Event {
 
     public Event() {}
 
-    public Event(String title, String apercu) {
+    public Event(int id, String title, String ville, String adresse, String lien, String description, String date_debut, String date_fin, String apercu) {
+        setId(id);
         setTitle(title);
+        setVille(ville);
+        setAdresse(adresse);
+        setLien(lien);
+        setDescription(description);
+        setDate_debut(date_debut);
+        setDate_fin(date_fin);
         setApercu(apercu);
     }
 
@@ -52,11 +89,83 @@ public class Event {
         this.apercu = apercu;
     }
 
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getLien() {
+        return lien;
+    }
+
+    public void setLien(String lien) {
+        this.lien = lien;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate_debut() {
+        return date_debut;
+    }
+
+    public void setDate_debut(String date_debut) {
+        this.date_debut = date_debut;
+    }
+
+    public String getDate_fin() {
+        return date_fin;
+    }
+
+    public void setDate_fin(String date_fin) {
+        this.date_fin = date_fin;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", ville='" + ville + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", lien='" + lien + '\'' +
+                ", description='" + description + '\'' +
+                ", date_debut='" + date_debut + '\'' +
+                ", date_fin='" + date_fin + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
                 ", apercu='" + apercu + '\'' +
                 '}';
     }
