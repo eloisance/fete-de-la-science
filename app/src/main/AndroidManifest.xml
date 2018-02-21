@@ -41,6 +41,7 @@
         <!-- Map activity -->
         <activity android:name=".activity.MapActivity"></activity>
 
+        <activity android:name=".activity.DetailEventActivity"></activity>
     </application>
 
 </manifest>

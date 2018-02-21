@@ -79,7 +79,7 @@ public class DataAsyncTask extends AsyncTask<Void, Double, Void> {
                                 event.setLatitude((Double) geolocalisation.get(0));
                                 event.setLongitude((Double) geolocalisation.get(1));
                             }catch(JSONException e){
-
+                                Log.d("error",event.toString());
                             }
 
 
