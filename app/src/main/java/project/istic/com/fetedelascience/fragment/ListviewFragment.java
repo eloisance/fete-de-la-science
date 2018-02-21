@@ -18,13 +18,13 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.adapter.MyInspectionRecyclerViewAdapter;
+import project.istic.com.fetedelascience.adapter.MyEventRecyclerViewAdapter;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
 
 public class ListviewFragment extends Fragment {
 
-    private MyInspectionRecyclerViewAdapter mAdapter;
+    private MyEventRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mManager;
     private RecyclerView mRecycler;
 
@@ -65,7 +65,7 @@ public class ListviewFragment extends Fragment {
             e.printStackTrace();
         }
 
-        mAdapter = new MyInspectionRecyclerViewAdapter(getContext(), cursor, preparedQuery);
+        mAdapter = new MyEventRecyclerViewAdapter(getContext(), cursor, preparedQuery);
         mRecycler.setAdapter(mAdapter);
 
         return rootView;
