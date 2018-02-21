@@ -27,7 +27,7 @@ import project.istic.com.fetedelascience.model.Event;
  * Created by jnsll on 21/02/18.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, ClusterManager.OnClusterClickListener<MapItem>, ClusterManager.OnClusterItemClickListener<MapItem> {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, ClusterManager.OnClusterClickListener<MapItem>, ClusterManager.OnClusterItemClickListener<MapItem>, ClusterManager.OnClusterInfoWindowClickListener<MapItem>, ClusterManager.OnClusterItemInfoWindowClickListener<MapItem> {
 
     //@BindView(R.id.map) SupportMapFragment map;
     SupportMapFragment mapFragment;
@@ -91,27 +91,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //                googleMap.addMarker(new MarkerOptions().position(atelier)
 //                        .title(title));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
-                MapItem item = new MapItem(lat, longitude, title, null);
+                MapItem item = new MapItem(lat, longitude, title, event, null);
                 mClusterManager.addItem(item);
-                //i++;
-//                if (i == 1) {
-//
-//                    MapItem item = new MapItem(lat, longitude, title, null);
-//                    mClusterManager.addItem(item);
-//                } else
-//                if (i < 10) {
-//                    MapItem item = new MapItem(lat, longitude, title, null);
-//                    mClusterManager.addItem(item);
-//                } else {
-//                    i = 0;
-//                }
             }
 
         }
-//        LatLng sydney = new LatLng(-33.852, 151.211);
-//        googleMap.addMarker(new MarkerOptions().position(sydney)
-//                .title("truc"));
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     private void setUpClusterer(GoogleMap googleMap) {
@@ -126,23 +110,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //        // manager.
         googleMap.setOnCameraIdleListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
-//
-//        // Add cluster items (markers) to the cluster manager.
-//        //addItems();
     }
-
-//    @Override
-//    public boolean onClusterItemClick(MapItem item) {
-//        // Does nothing, but you could go into the user's profile page, for example.
-//        return false;
-//    }
 
 
     @Override
     public boolean onClusterClick(Cluster<MapItem> cluster) {
         // Show a toast with some info when the cluster is clicked.
-        Log.d("CLUSTER", cluster.getItems().toString()); //String title =
-        Toast.makeText(this, cluster.getSize() + " (including " + "title" + ")", Toast.LENGTH_SHORT).show();
+        String title = cluster.getItems().iterator().next().getTitle();
+        Log.d("CLUSTER", title); //String title =
+        Toast.makeText(this, cluster.getSize() + " (including " + title + ")", Toast.LENGTH_SHORT).show();
         // Create the builder to collect all essential cluster items for the bounds.
         LatLngBounds.Builder builder = LatLngBounds.builder();
         for (ClusterItem item : cluster.getItems()) {
@@ -161,30 +137,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return true;
     }
 
+
+    @Override
+    public void onClusterInfoWindowClick(Cluster<MapItem> cluster) {
+        // Does nothing, but you could go to a list of the users.
+        Log.d("trucWind", "taille: " + cluster.getSize());
+    }
+
     @Override
     public boolean onClusterItemClick(MapItem item) {
         // Does nothing, but you could go into the user's profile page, for example.
-        Log.v("MARK", item.getTitle().toString());
-        return true;
+        Log.d("truc", item.getEvent().toString());
+        return false;
     }
 
+    @Override
+    public void onClusterItemInfoWindowClick(MapItem item) {
+        // Does nothing, but you could go into the user's profile page, for example.
+        Log.d("WINDOWS", item.getEvent().toString());
 
-//
-//    private void addItems() {
-//
-//        // Set some lat/lng coordinates to start with.
-//        double lat = 48.859489;
-//        double lng = 2.320582;
-//
-//        // Add ten cluster items in close proximity, for purposes of this example.
-//        for (int i = 0; i < 20; i++) {
-//            double offset = i / 60d;
-//            lat = lat + offset;
-//            lng = lng + offset;
-//            MapItem offsetItem = new MapItem(lat, lng);
-//            mClusterManager.addItem(offsetItem);
-//        }
-//    }
+    }
 
 
 }
