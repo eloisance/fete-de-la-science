@@ -1,11 +1,14 @@
 package project.istic.com.fetedelascience.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "event")
-public class Event {
+public class Event implements Parcelable {
 
     @DatabaseField
     @SerializedName("identifiant")
@@ -40,6 +43,10 @@ public class Event {
     private String date_fin;
 
     @DatabaseField
+    @SerializedName("resume_dates_fr")
+    private String resume_dates_fr;
+
+    @DatabaseField
     private Double longitude;
 
     @DatabaseField
@@ -53,7 +60,7 @@ public class Event {
 
     public Event() {}
 
-    public Event(int id, String title, String ville, String adresse, String lien, String description, String date_debut, String date_fin, String apercu) {
+    public Event(int id, String title, String ville, String adresse, String lien, String description, String date_debut, String date_fin, String apercu,String resume_dates_fr) {
         setId(id);
         setTitle(title);
         setVille(ville);
@@ -63,7 +70,9 @@ public class Event {
         setDate_debut(date_debut);
         setDate_fin(date_fin);
         setApercu(apercu);
+        setResume_dates_fr(resume_dates_fr);
     }
+
 
     public int getId() {
         return id;
@@ -152,7 +161,13 @@ public class Event {
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
+    public String getResume_dates_fr() {
+        return resume_dates_fr;
+    }
 
+    public void setResume_dates_fr(String resume_dates_fr) {
+        this.resume_dates_fr = resume_dates_fr;
+    }
     @Override
     public String toString() {
         return "Event{" +
@@ -169,4 +184,53 @@ public class Event {
                 ", apercu='" + apercu + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.ville);
+        dest.writeString(this.adresse);
+        dest.writeString(this.lien);
+        dest.writeString(this.description);
+        dest.writeString(this.date_debut);
+        dest.writeString(this.date_fin);
+        dest.writeString(this.resume_dates_fr);
+        dest.writeValue(this.longitude);
+        dest.writeValue(this.latitude);
+        dest.writeString(this.apercu);
+    }
+
+    protected Event(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.ville = in.readString();
+        this.adresse = in.readString();
+        this.lien = in.readString();
+        this.description = in.readString();
+        this.date_debut = in.readString();
+        this.date_fin = in.readString();
+        this.resume_dates_fr = in.readString();
+        this.longitude = (Double) in.readValue(Double.class.getClassLoader());
+        this.latitude = (Double) in.readValue(Double.class.getClassLoader());
+        this.apercu = in.readString();
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel source) {
+            return new Event(source);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 }
