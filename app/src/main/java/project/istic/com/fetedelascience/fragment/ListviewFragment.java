@@ -3,32 +3,30 @@ package project.istic.com.fetedelascience.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.android.apptools.support.OrmLiteCursorLoader;
+import com.j256.ormlite.android.AndroidDatabaseResults;
+import com.j256.ormlite.dao.CloseableIterator;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.adapter.MyInspectionRecyclerViewAdapter;
 import project.istic.com.fetedelascience.helper.DBManager;
-import project.istic.com.fetedelascience.helper.SQLiteHelper;
 import project.istic.com.fetedelascience.model.Event;
 
-public class ListviewFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ListviewFragment extends Fragment {
 
-    private final static int LOADER_ID = 0;
-
-    @BindView(R.id.txtView) TextView txtView;
+    private MyInspectionRecyclerViewAdapter mAdapter;
+    private LinearLayoutManager mManager;
+    private RecyclerView mRecycler;
 
     private Dao<Event, Long> eventDao;
     private PreparedQuery<Event> preparedQuery;
@@ -43,8 +41,32 @@ public class ListviewFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
 
-        ButterKnife.bind(this, rootView);
-        txtView.setText("Test");
+        mRecycler = (RecyclerView) rootView.findViewById(R.id.recycler_event);
+        mRecycler.setHasFixedSize(true);
+
+        mManager = new LinearLayoutManager(getActivity());
+        mRecycler.setLayoutManager(mManager);
+
+
+        DBManager manager = DBManager.getInstance();
+        Dao<Event, Integer> daoEvent = manager.getHelper().getEventDAO();
+
+        QueryBuilder<Event, Integer> queryBuilder = daoEvent.queryBuilder();
+
+        Cursor cursor = null;
+        PreparedQuery<Event> preparedQuery = null;
+
+        try {
+            preparedQuery = queryBuilder.prepare();
+            CloseableIterator<Event> iterator = daoEvent.iterator(preparedQuery);
+            AndroidDatabaseResults results = (AndroidDatabaseResults) iterator.getRawResults();
+            cursor = results.getRawCursor();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        mAdapter = new MyInspectionRecyclerViewAdapter(cursor, preparedQuery);
+        mRecycler.setAdapter(mAdapter);
 
         return rootView;
     }
@@ -52,30 +74,5 @@ public class ListviewFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        final SQLiteHelper helper = OpenHelperManager.getHelper(getActivity(), SQLiteHelper.class);
-        try {
-            eventDao = helper.getDao(Event.class);
-            preparedQuery = eventDao.queryBuilder().prepare();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new OrmLiteCursorLoader<Event>(getActivity(), eventDao, preparedQuery);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }

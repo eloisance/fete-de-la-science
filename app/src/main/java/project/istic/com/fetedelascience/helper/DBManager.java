@@ -28,10 +28,9 @@ public class DBManager {
         helper = new SQLiteHelper(context);
     }
 
-    private SQLiteHelper getHelper() {
+    public SQLiteHelper getHelper() {
         return helper;
     }
-
 
     /** Methods [Event] **/
 
