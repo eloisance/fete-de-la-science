@@ -132,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.drawer_menu_route:
                 setFragment(new ListviewFragment(), (String) item.getTitle());
                 break;
+            case R.id.drawer_menu_admin:
+                openActivity(LoginActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
+                break;
             case R.id.drawer_menu_settings:
                 openActivity(SettingsActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
                 break;

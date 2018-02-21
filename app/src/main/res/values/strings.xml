@@ -12,7 +12,14 @@
     <string name="navdrawer_list">Liste des événements</string>
     <string name="navdrawer_map">Carte des événements</string>
     <string name="navdrawer_route">Parcours</string>
+    <string name="navdrawer_admin">Organisateur</string>
     <string name="navdrawer_settings">Paramètres</string>
+
+    <!-- Login -->
+    <string name="login_activity_title">Connexion</string>
+    <string name="login_activity_input_email">Email</string>
+    <string name="login_activity_input_password">Mot de passe</string>
+    <string name="login_activity_btn_login_default">Connexion</string>
 
     <!-- Menu -->
     <string name="menu_icon_list">View in list</string>
