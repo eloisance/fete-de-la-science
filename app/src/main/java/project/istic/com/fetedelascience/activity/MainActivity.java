@@ -8,15 +8,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.List;
 
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.fragment.ListviewFragment;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
+import project.istic.com.fetedelascience.fragment.MapMarkerFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private PrefManager prefManager;
 
@@ -58,10 +64,14 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("debug: empty");
         }
 
-        Fragment listFragment = new ListviewFragment();
+//        Fragment listFragment = new ListviewFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.content_frame, listFragment)
+//                .commit();
+        Fragment mapFragment = new MapMarkerFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, listFragment)
+        fragmentManager.beginTransaction().replace(R.id.content_frame, mapFragment)
                 .commit();
     }
 
@@ -82,5 +92,16 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        // Add a marker in Sydney, Australia,
+        // and move the map's camera to the same location.
+        LatLng sydney = new LatLng(-33.852, 151.211);
+        googleMap.addMarker(new MarkerOptions().position(sydney)
+                .title("Marker in Sydney"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
 
 }
