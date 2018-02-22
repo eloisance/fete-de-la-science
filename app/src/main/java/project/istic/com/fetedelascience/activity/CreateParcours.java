@@ -1,15 +1,20 @@
 package project.istic.com.fetedelascience.activity;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +37,7 @@ import project.istic.com.fetedelascience.adapter.ParcoursEventRecyclerViewAdapte
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
 import project.istic.com.fetedelascience.model.Parcours;
+import project.istic.com.fetedelascience.util.UIHelper;
 
 public class CreateParcours extends AppCompatActivity {
 
@@ -55,6 +61,12 @@ public class CreateParcours extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_parcours);
         ButterKnife.bind(this);
+
+        setTitle("Création de parcours");
+        if(getSupportActionBar() != null) {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        search.setFocusable(false);
         listEvent.setHasFixedSize(true);
         listAddEvent.setHasFixedSize(true);
 
@@ -106,17 +118,11 @@ public class CreateParcours extends AppCompatActivity {
         valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String idUser = Settings.Secure.getString(getContentResolver(),
-                        Settings.Secure.ANDROID_ID);
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("parcours");
-                ArrayList<Integer> idEvent = new ArrayList<>();
-                for (Event event : mAdapterParcours.getParcours()){
-                    idEvent.add(event.getId());
+                if(mAdapterParcours.getParcours().size()!=0) {
+                    enterName();
+                } else {
+                    UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.text_popup_error), "OK");
                 }
-
-                myRef.push().setValue(new Parcours("Yeah",idEvent,idUser));
-                finish();
             }
         });
     }
@@ -125,4 +131,48 @@ public class CreateParcours extends AppCompatActivity {
         this.mAdapterParcours.addEvent(event);
     }
 
+
+    public void enterName(){
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.popup_name_parcours, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(true)
+                .setPositiveButton("OK",
+                        (dialog, id) -> {
+                            // get user input and set it to result
+                            // edit text
+                            String idUser = Settings.Secure.getString(getContentResolver(),
+                                    Settings.Secure.ANDROID_ID);
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("parcours");
+                            ArrayList<Integer> idEvent = new ArrayList<>();
+                            for (Event event : mAdapterParcours.getParcours()){
+                                idEvent.add(event.getId());
+                            }
+
+                            myRef.push().setValue(new Parcours(userInput.getText().toString(),idEvent,idUser));
+                            finish();
+
+                        }).setNegativeButton("Cancel",
+                (dialog, id) -> dialog.cancel());
+
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
 }
