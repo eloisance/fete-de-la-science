@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             } else {
                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                // UIHelper.showSnackbar(getCurrentFocus(), getApplicationContext(), getString(R.string.login_activity_error_login));
+                UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.login_activity_error_login));
             }
         });
     }
