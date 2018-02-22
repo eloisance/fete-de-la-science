@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navAdmin.setTitle(R.string.navdrawer_logout);
                 headerName.setText(R.string.navdrawer_default_header_email);
                 headerEmail.setText(user.getEmail());
-                UIHelper.showSnackbar(getCurrentFocus(), getApplicationContext(), getString(R.string.login_activity_connected), "OK");
+                // UIHelper.showSnackbar(getCurrentFocus(), getApplicationContext(), getString(R.string.login_activity_connected), "OK");
             } else {
                 Log.d(TAG,"onAuthStateChanged:signed_out");
                 navAdmin.setTitle(R.string.navdrawer_admin);
                 headerName.setText("");
                 headerEmail.setText(R.string.navdrawer_default_header_name);
-                UIHelper.showSnackbar(getCurrentFocus(), getApplicationContext(), getString(R.string.login_activity_disconnected), "OK");
+                // UIHelper.showSnackbar(getCurrentFocus(), getApplicationContext(), getString(R.string.login_activity_disconnected), "OK");
             }
         });
 
