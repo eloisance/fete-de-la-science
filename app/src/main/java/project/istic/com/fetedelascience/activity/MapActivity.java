@@ -81,6 +81,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.mMap = googleMap;
         this.markerManager= new MarkerManager(this.mMap);
         this.mMap.getUiSettings().setZoomControlsEnabled(true);
+        this.mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         setUpClusterer(this.mMap);
         for (Event event : events) {
@@ -94,8 +95,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //                googleMap.addMarker(new MarkerOptions().position(atelier)
 //                        .title(title));
                 this.mMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
-                MapItem item = new MapItem(lat, longitude, title, event, null);
-                mClusterManager.addItem(item);
+                MapItem item = new MapItem(lat, longitude, title, event, event.getDescription());
+                this.mClusterManager.addItem(item);
+                //this.mClusterManager.cluster();
                 //mClusterManager.setOnClusterClickListener(this);
             }
 
@@ -108,15 +110,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //
 //        // Initialize the manager with the context and the map.
 //        // (Activity extends context, so we can pass 'this' in the constructor.)
-        mClusterManager = new ClusterManager<MapItem>(this, googleMap, this.markerManager);
+        this.mClusterManager = new ClusterManager<MapItem>(this, googleMap, this.markerManager);
 //
 //        // Point the map's listeners at the listeners implemented by the cluster
 //        // manager.
-        googleMap.setOnCameraIdleListener(mClusterManager);
-        googleMap.setOnMarkerClickListener(mClusterManager);
-        mClusterManager.setOnClusterClickListener(this);
-        mClusterManager.setOnClusterItemClickListener(this);
-        mClusterManager.setOnClusterItemInfoWindowClickListener(this);
+        googleMap.setOnCameraIdleListener(this.mClusterManager);
+        googleMap.setOnMarkerClickListener(this.mClusterManager);
+        this.mClusterManager.setOnClusterClickListener(this);
+        this.mClusterManager.setOnClusterItemClickListener(this);
+        this.mClusterManager.setOnClusterItemInfoWindowClickListener(this);
+        this.mClusterManager.setOnClusterInfoWindowClickListener(this);
+
+        googleMap.setOnInfoWindowClickListener(this.mClusterManager);
+        //googleMap.setOnMarkerClickListener(this.mClusterManager);
+//        googleMap.setOnInfoWindowClickListener(clusterManager);
+//        googleMap.setOnMapClickListener(this);
     }
 
 
@@ -157,16 +165,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public boolean onClusterItemClick(MapItem item) {
         // Does nothing, but you could go into the user's profile page, for example.
         Log.d("TRUCITEM", item.getEvent().getTitle());
-        Intent intent = new Intent(this, DetailEventActivity.class);
-        intent.putExtra("event", item.getEvent());
-        this.startActivity(intent);
+//        Intent intent = new Intent(this, DetailEventActivity.class);
+//        intent.putExtra("event", item.getEvent());
+//        this.startActivity(intent);
         return false;
     }
+
 
     @Override
     public void onClusterItemInfoWindowClick(MapItem item) {
         // Does nothing, but you could go into the user's profile page, for example.
-        Log.d("WINDOWS", item.getEvent().toString());
+        Log.d("WINDOWS", item.getEvent().getDescription());
+        //this.mClusterManager.getMarkerManager().
+        Intent intent = new Intent(this, DetailEventActivity.class);
+        intent.putExtra("event", item.getEvent());
+        this.startActivity(intent);
     }
 
 
