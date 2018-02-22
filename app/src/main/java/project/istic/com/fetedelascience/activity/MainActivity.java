@@ -23,7 +23,8 @@ import android.view.View;
 import java.util.List;
 
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.fragment.ListviewFragment;
+import project.istic.com.fetedelascience.fragment.EventListviewFragment;
+import project.istic.com.fetedelascience.fragment.ParcoursListViewFragment;
 import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Default fragment
-        Fragment listviewFragment = new ListviewFragment();
+        Fragment listviewFragment = new EventListviewFragment();
         setFragment(listviewFragment, "Liste");
         this.onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
@@ -124,13 +125,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.drawer_menu_liste:
-                setFragment(new ListviewFragment(), (String) item.getTitle());
+                setFragment(new EventListviewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_map:
                 openActivity(MapActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
                 break;
             case R.id.drawer_menu_route:
-                setFragment(new ListviewFragment(), (String) item.getTitle());
+                setFragment(new ParcoursListViewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_admin:
                 openActivity(LoginActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);

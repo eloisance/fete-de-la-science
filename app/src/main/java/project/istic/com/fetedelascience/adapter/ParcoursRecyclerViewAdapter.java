@@ -1,8 +1,6 @@
 package project.istic.com.fetedelascience.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,55 +10,65 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.j256.ormlite.stmt.PreparedQuery;
+import java.util.ArrayList;
 
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.activity.DetailEventActivity;
-import project.istic.com.fetedelascience.model.Event;
+import project.istic.com.fetedelascience.model.Parcours;
 
-public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyEventRecyclerViewAdapter.ViewHolder> implements Filterable {
+public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursRecyclerViewAdapter.ViewHolder> implements Filterable {
+
+    ArrayList<Parcours> parcours;
 
     private Context context;
 
-    public MyEventRecyclerViewAdapter(Context c, Cursor cursor, PreparedQuery<Event> preparedQuery) {
-        super(cursor, preparedQuery);
+    public ParcoursRecyclerViewAdapter(Context c, ArrayList<Parcours> parcours) {
         this.context = c;
+        if(parcours == null){
+            this.parcours = new ArrayList<>();
+        } else {
+            this.parcours = parcours;
+        }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_event, parent, false);
+                .inflate(R.layout.item_parcours, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final Event event) {
-
-        holder.mTitle.setText(event.getTitle());
-        holder.mCity.setText(event.getVille());
-
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.mTitle.setText(this.parcours.get(position).getName());
+        holder.mSize.setText("Nombre d'évenement : "+this.parcours.get(position).numberEvent());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailEventActivity.class);
-                intent.putExtra("event", event);
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, DetailEventActivity.class);
+//                intent.putExtra("event", event);
+//                context.startActivity(intent);
             }
         });
     }
+
+    @Override
+    public int getItemCount() {
+        return this.parcours.size();
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private View mView;
         private TextView mTitle;
-        private TextView mCity;
+        private TextView mSize;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
-            mTitle = (TextView) view.findViewById(R.id.event_title);
-            mCity = (TextView) view.findViewById(R.id.event_city);
+            mTitle = view.findViewById(R.id.parcour_title);
+            mSize = view.findViewById(R.id.parcour_size);
+
         }
     }
 
@@ -83,4 +91,8 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
         };
     }
 
+    public void setParcours(ArrayList<Parcours> parcours) {
+        this.parcours = parcours;
+
+    }
 }

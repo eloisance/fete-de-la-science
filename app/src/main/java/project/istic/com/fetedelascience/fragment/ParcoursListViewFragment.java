@@ -1,6 +1,5 @@
 package project.istic.com.fetedelascience.fragment;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,66 +12,47 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.j256.ormlite.android.AndroidDatabaseResults;
-import com.j256.ormlite.dao.CloseableIterator;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.adapter.MyEventRecyclerViewAdapter;
-import project.istic.com.fetedelascience.helper.DBManager;
-import project.istic.com.fetedelascience.model.Event;
+import project.istic.com.fetedelascience.adapter.ParcoursRecyclerViewAdapter;
+import project.istic.com.fetedelascience.model.Parcours;
 
-public class ListviewFragment extends Fragment {
+public class ParcoursListViewFragment extends Fragment {
 
-    private MyEventRecyclerViewAdapter mAdapter;
+    private ParcoursRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mManager;
     private RecyclerView mRecycler;
 
     private SearchView searchView;
 
-    private Dao<Event, Long> eventDao;
-    private PreparedQuery<Event> preparedQuery;
+    private  ArrayList<Parcours> parcours;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        this.getParcours();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_listparcours, container, false);
 
-        mRecycler = (RecyclerView) rootView.findViewById(R.id.recycler_event);
+        mRecycler = rootView.findViewById(R.id.recycler_parcour);
         mRecycler.setHasFixedSize(true);
 
         mManager = new LinearLayoutManager(getActivity());
         mRecycler.setLayoutManager(mManager);
 
-
-        DBManager manager = DBManager.getInstance();
-        Dao<Event, Integer> daoEvent = manager.getHelper().getEventDAO();
-
-        QueryBuilder<Event, Integer> queryBuilder = daoEvent.queryBuilder();
-
-        Cursor cursor = null;
-        PreparedQuery<Event> preparedQuery = null;
-
-        try {
-            preparedQuery = queryBuilder.prepare();
-            CloseableIterator<Event> iterator = daoEvent.iterator(preparedQuery);
-            AndroidDatabaseResults results = (AndroidDatabaseResults) iterator.getRawResults();
-            cursor = results.getRawCursor();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        mAdapter = new MyEventRecyclerViewAdapter(getContext(), cursor, preparedQuery);
-        mRecycler.setAdapter(mAdapter);
 
         return rootView;
     }
@@ -81,7 +61,7 @@ public class ListviewFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        // listening to search query text change
+
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -108,5 +88,29 @@ public class ListviewFragment extends Fragment {
         }
 
         return false;
+    }
+
+    private void getParcours(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("parcour");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                GenericTypeIndicator<HashMap<String,Parcours>> t = new GenericTypeIndicator<HashMap<String,Parcours>>() {};
+                HashMap<String,Parcours> yourStringArray = dataSnapshot.getValue(t);
+
+                parcours = new ArrayList<>(yourStringArray.values());
+                mAdapter = new ParcoursRecyclerViewAdapter(getContext(),parcours);
+
+                mRecycler.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
     }
 }
