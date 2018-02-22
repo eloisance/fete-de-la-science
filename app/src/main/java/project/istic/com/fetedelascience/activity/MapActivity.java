@@ -1,5 +1,6 @@
 package project.istic.com.fetedelascience.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.android.MarkerManager;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
@@ -36,6 +38,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     // Declare a variable for the cluster manager.
     private ClusterManager<MapItem> mClusterManager;
+    private MarkerManager markerManager;
 
 
     @Override
@@ -75,11 +78,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        mMap = googleMap;
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        this.mMap = googleMap;
+        this.markerManager= new MarkerManager(this.mMap);
+        this.mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        int i = 0;
-        setUpClusterer(mMap);
+        setUpClusterer(this.mMap);
         for (Event event : events) {
             Double lat = event.getLatitude();
             Double longitude = event.getLongitude();
@@ -90,9 +93,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 atelier = new LatLng(lat, longitude);
 //                googleMap.addMarker(new MarkerOptions().position(atelier)
 //                        .title(title));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
+                this.mMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
                 MapItem item = new MapItem(lat, longitude, title, event, null);
                 mClusterManager.addItem(item);
+                //mClusterManager.setOnClusterClickListener(this);
             }
 
         }
@@ -104,36 +108,41 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //
 //        // Initialize the manager with the context and the map.
 //        // (Activity extends context, so we can pass 'this' in the constructor.)
-        mClusterManager = new ClusterManager<MapItem>(this, googleMap);
+        mClusterManager = new ClusterManager<MapItem>(this, googleMap, this.markerManager);
 //
 //        // Point the map's listeners at the listeners implemented by the cluster
 //        // manager.
         googleMap.setOnCameraIdleListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
+        mClusterManager.setOnClusterClickListener(this);
+        mClusterManager.setOnClusterItemClickListener(this);
+        mClusterManager.setOnClusterItemInfoWindowClickListener(this);
     }
 
 
     @Override
     public boolean onClusterClick(Cluster<MapItem> cluster) {
         // Show a toast with some info when the cluster is clicked.
-        String title = cluster.getItems().iterator().next().getTitle();
-        Log.d("CLUSTER", title); //String title =
-        Toast.makeText(this, cluster.getSize() + " (including " + title + ")", Toast.LENGTH_SHORT).show();
+        String title = "";
+                //= cluster.getItems().iterator().next().getTitle();
+        //Log.d("CLUSTER", title); //String title =
         // Create the builder to collect all essential cluster items for the bounds.
         LatLngBounds.Builder builder = LatLngBounds.builder();
         for (ClusterItem item : cluster.getItems()) {
             Log.d("ITEM", item.getTitle());
+            title += item.getTitle() + "\n";
             builder.include(item.getPosition());
         }
+        Toast.makeText(this, "Nombre d'ateliers : " + cluster.getSize() + "\n" + title + "", Toast.LENGTH_SHORT).show();
         // Get the LatLngBounds
-        final LatLngBounds bounds = builder.build();
+        //final LatLngBounds bounds = builder.build();
 
         // Animate camera to the bounds
-        try {
-            this.mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            this.mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return true;
     }
 
@@ -147,7 +156,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public boolean onClusterItemClick(MapItem item) {
         // Does nothing, but you could go into the user's profile page, for example.
-        Log.d("truc", item.getEvent().toString());
+        Log.d("TRUCITEM", item.getEvent().getTitle());
+        Intent intent = new Intent(this, DetailEventActivity.class);
+        intent.putExtra("event", item.getEvent());
+        this.startActivity(intent);
         return false;
     }
 
@@ -155,7 +167,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onClusterItemInfoWindowClick(MapItem item) {
         // Does nothing, but you could go into the user's profile page, for example.
         Log.d("WINDOWS", item.getEvent().toString());
-
     }
 
 
