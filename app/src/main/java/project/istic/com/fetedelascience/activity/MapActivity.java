@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.MarkerManager;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
@@ -20,6 +23,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
 
+import butterknife.BindView;
 import project.istic.com.fetedelascience.MapItem;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.helper.DBManager;
@@ -76,8 +80,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
         this.mMap = googleMap;
         this.markerManager= new MarkerManager(this.mMap);
         this.mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -92,15 +94,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //setUpClusterer(googleMap);
             if (lat != null && longitude != null) {
                 atelier = new LatLng(lat, longitude);
-//                googleMap.addMarker(new MarkerOptions().position(atelier)
-//                        .title(title));
                 this.mMap.moveCamera(CameraUpdateFactory.newLatLng(atelier));
                 MapItem item = new MapItem(lat, longitude, title, event, event.getDescription());
                 this.mClusterManager.addItem(item);
                 //this.mClusterManager.cluster();
-                //mClusterManager.setOnClusterClickListener(this);
             }
-
         }
     }
 
@@ -118,12 +116,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         googleMap.setOnMarkerClickListener(this.mClusterManager);
         this.mClusterManager.setOnClusterClickListener(this);
         this.mClusterManager.setOnClusterItemClickListener(this);
+        mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MyCustomAdapterForClusters());
         this.mClusterManager.setOnClusterItemInfoWindowClickListener(this);
         this.mClusterManager.setOnClusterInfoWindowClickListener(this);
-
+        googleMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
         googleMap.setOnInfoWindowClickListener(this.mClusterManager);
-        //googleMap.setOnMarkerClickListener(this.mClusterManager);
-//        googleMap.setOnInfoWindowClickListener(clusterManager);
+
+
+
 //        googleMap.setOnMapClickListener(this);
     }
 
@@ -151,6 +151,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+
         return true;
     }
 
@@ -180,6 +181,47 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, DetailEventActivity.class);
         intent.putExtra("event", item.getEvent());
         this.startActivity(intent);
+    }
+
+    public class MyCustomAdapterForClusters implements GoogleMap.InfoWindowAdapter {
+
+        //@BindView(R.id.info)
+        private final View myContentsView;
+
+        @BindView(R.id.txtTitle) TextView title;
+        @BindView(R.id.txtSnippet) TextView snippet;
+
+
+        MyCustomAdapterForClusters() {
+            myContentsView = getLayoutInflater().inflate(
+                    R.layout.info_windows, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            // TODO Auto-generated method stub
+
+
+//            TextView tvTitle = ((TextView) myContentsView
+//                    .findViewById(R.id.txtTitle));
+//            TextView tvSnippet = ((TextView) myContentsView
+//                    .findViewById(R.id.txtSnippet));
+            title.setText(marker.getTitle());
+            snippet.setText(marker.getSnippet());
+            snippet.setVisibility(View.GONE);
+
+//            if (clickedCluster != null) {
+//                tvTitle.setText(String
+//                        .valueOf(clickedCluster.getItems().size())
+//                        + " more offers available");
+//            }
+            return myContentsView;
+        }
     }
 
 
