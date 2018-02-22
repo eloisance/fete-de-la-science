@@ -4,20 +4,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Parcours implements Serializable, Parcelable {
 
     String name;
-    List<String> listEvent;
+    List<Integer> listEvent;
+    String idUser;
 
     public Parcours() {
     }
 
-    public Parcours(String name, List<String> listEvent) {
+    public Parcours(String name, List<Integer> listEvent,String idUser) {
         setName(name);
         setListEvent(listEvent);
+        setIdUser(idUser);
 
     }
 
@@ -31,7 +34,7 @@ public class Parcours implements Serializable, Parcelable {
         return name;
     }
 
-    public List<String> getListEvent() {
+    public List<Integer> getListEvent() {
         return listEvent;
     }
 
@@ -39,9 +42,26 @@ public class Parcours implements Serializable, Parcelable {
         this.name = name;
     }
 
-    public void setListEvent(List<String> listEvent) {
+    public void setListEvent(List<Integer> listEvent) {
         this.listEvent = listEvent;
     }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    @Override
+    public String toString() {
+        return "Parcours{" +
+                "name='" + name + '\'' +
+                ", listEvent=" + listEvent +
+                '}';
+    }
+
 
     @Override
     public int describeContents() {
@@ -51,12 +71,15 @@ public class Parcours implements Serializable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeStringList(this.listEvent);
+        dest.writeList(this.listEvent);
+        dest.writeString(this.idUser);
     }
 
     protected Parcours(Parcel in) {
         this.name = in.readString();
-        this.listEvent = in.createStringArrayList();
+        this.listEvent = new ArrayList<Integer>();
+        in.readList(this.listEvent, Integer.class.getClassLoader());
+        this.idUser = in.readString();
     }
 
     public static final Parcelable.Creator<Parcours> CREATOR = new Parcelable.Creator<Parcours>() {
@@ -70,12 +93,4 @@ public class Parcours implements Serializable, Parcelable {
             return new Parcours[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "Parcours{" +
-                "name='" + name + '\'' +
-                ", listEvent=" + listEvent +
-                '}';
-    }
 }

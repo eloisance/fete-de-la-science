@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PrefManager prefManager;
 
     private AppBarLayout appBar;
+
     private FloatingActionButton fab;
     private DrawerLayout drawer;
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    openActivity(CreateParcours.class,0);
                 }
             });
         }
@@ -142,7 +143,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             default:
                 break;
         }
-
+        if (item.getItemId() == R.id.drawer_menu_route) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.INVISIBLE);
+        }
         // Close drawer
         if (this.drawer != null) {
             this.drawer.closeDrawer(GravityCompat.START);

@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.adapter.ParcoursRecyclerViewAdapter;
 import project.istic.com.fetedelascience.model.Parcours;
@@ -29,8 +31,10 @@ import project.istic.com.fetedelascience.model.Parcours;
 public class ParcoursListViewFragment extends Fragment {
 
     private ParcoursRecyclerViewAdapter mAdapter;
-    private LinearLayoutManager mManager;
-    private RecyclerView mRecycler;
+
+    @BindView(R.id.recycler_parcour)
+    RecyclerView mRecycler;
+
 
     private SearchView searchView;
 
@@ -47,10 +51,10 @@ public class ParcoursListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_listparcours, container, false);
 
-        mRecycler = rootView.findViewById(R.id.recycler_parcour);
+        ButterKnife.bind(this, rootView);
         mRecycler.setHasFixedSize(true);
 
-        mManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mManager = new LinearLayoutManager(getActivity());
         mRecycler.setLayoutManager(mManager);
 
 
@@ -92,15 +96,19 @@ public class ParcoursListViewFragment extends Fragment {
 
     private void getParcours(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("parcour");
+        DatabaseReference myRef = database.getReference("parcours");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 GenericTypeIndicator<HashMap<String,Parcours>> t = new GenericTypeIndicator<HashMap<String,Parcours>>() {};
                 HashMap<String,Parcours> yourStringArray = dataSnapshot.getValue(t);
+                if(yourStringArray == null){
+                    parcours = new ArrayList<>();
+                } else {
+                    parcours = new ArrayList<>(yourStringArray.values());
+                }
 
-                parcours = new ArrayList<>(yourStringArray.values());
                 mAdapter = new ParcoursRecyclerViewAdapter(getContext(),parcours);
 
                 mRecycler.setAdapter(mAdapter);
