@@ -7,11 +7,14 @@
     <string name="tutorial_end">Terminé</string>
 
     <!-- Navigation drawer -->
+    <string name="navdrawer_default_header_email">Bonjour,</string>
+    <string name="navdrawer_default_header_name">Utilisateur anonyme</string>
     <string name="navdrawer_open">Open navigation drawer</string>
     <string name="navdrawer_close">Close navigation drawer</string>
     <string name="navdrawer_list">Liste des événements</string>
     <string name="navdrawer_map">Carte des événements</string>
     <string name="navdrawer_route">Parcours</string>
+    <string name="navdrawer_logout">Déconnexion</string>
     <string name="navdrawer_admin">Organisateur</string>
     <string name="navdrawer_settings">Paramètres</string>
 
@@ -20,6 +23,9 @@
     <string name="login_activity_input_email">Email</string>
     <string name="login_activity_input_password">Mot de passe</string>
     <string name="login_activity_btn_login_default">Connexion</string>
+    <string name="login_activity_error_login">Impossible de vous connecter</string>
+    <string name="login_activity_connected">Vous êtes connecté !</string>
+    <string name="login_activity_disconnected">Vous êtes déconnecté !</string>
 
     <!-- Menu -->
     <string name="menu_icon_list">View in list</string>

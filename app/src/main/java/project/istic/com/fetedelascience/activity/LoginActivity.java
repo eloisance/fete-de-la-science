@@ -5,21 +5,18 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.util.UIHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,16 +45,16 @@ public class LoginActivity extends AppCompatActivity {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        mInputEmail.setText("admin@app.com");
+        mInputPassword.setText("123456");
+
         mAuth = FirebaseAuth.getInstance();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = mInputEmail.getText().toString();
-                String password = mInputPassword.getText().toString();
-                if (!email.equals("") && !password.equals("")) {
-                    signIn(email, password);
-                }
+        btnSubmit.setOnClickListener(v -> {
+            String email = mInputEmail.getText().toString();
+            String password = mInputPassword.getText().toString();
+            if (!email.equals("") && !password.equals("")) {
+                signIn(email, password);
             }
         });
     }
@@ -79,22 +76,13 @@ public class LoginActivity extends AppCompatActivity {
      * @param password Password
      */
     private void signIn(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-
-                    // updateUI(user);
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-
-                    // updateUI(null);
-                }
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                Log.d(TAG, "signInWithEmail:success");
+                finish();
+            } else {
+                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                UIHelper.showSnackbar(getCurrentFocus(), getApplicationContext(), getString(R.string.login_activity_error_login));
             }
         });
     }
