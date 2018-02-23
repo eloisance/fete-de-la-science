@@ -14,6 +14,7 @@
     <string name="navdrawer_list">Liste des événements</string>
     <string name="navdrawer_map">Carte des événements</string>
     <string name="navdrawer_route">Parcours</string>
+    <string name="navdrawer_stats">Statistiques</string>
     <string name="navdrawer_logout">Déconnexion</string>
     <string name="navdrawer_admin">Organisateur</string>
     <string name="navdrawer_settings">Paramètres</string>
