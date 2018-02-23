@@ -3,16 +3,21 @@ package project.istic.com.fetedelascience.activity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.model.Event;
 
 import android.provider.Settings;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RatingBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,10 +52,21 @@ public class DetailEventActivity extends AppCompatActivity {
     @BindView(R.id.noteGlobale)
     TextView noteGlobale;
 
+    @BindView(R.id.seekBar)
+    SeekBar seekBar;
+
+    @BindView(R.id.txtSeekBar)
+    TextView txtSeekBar;
+
+    @BindView(R.id.txtFillingRate)
+    TextView txtFillingRate;
+
 //    @BindView(R.id.imageEvent)
 //    ImageView imageEvent;
 
     Event event;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +88,30 @@ public class DetailEventActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+
+        // Filling rate feature
+        this.getFillingRate();
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                    txtSeekBar.setText(String.format(getString(R.string.detail_event_organisateur_txt), seekBar.getProgress()));
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("fillingRate");
+                    myRef.child(event.getId()+"").setValue(seekBar.getProgress());
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+            });
+        }
+
         this.getMyNote();
         this.addListenerRatingBar();
         this.noteGlobaleUpdate();
@@ -80,9 +120,6 @@ public class DetailEventActivity extends AppCompatActivity {
         this.adresse.setText(event.getAdresse());
         this.horaire.setText(event.getResume_dates_fr());
         this.lien.setText(event.getLien());
-
-
-
     }
 
     @Override
@@ -130,21 +167,13 @@ public class DetailEventActivity extends AppCompatActivity {
                             noteMoyenne += Double.parseDouble(note);
                         }
                     }
-//                    for(String note : notes){
-//                        if (note != null) {
-//                            noteMoyenne += Double.parseDouble(note);
-//                        }
-//                    }
-
                     noteGlobale.setText("Note moyenne "+ noteMoyenne / (notes.size() ) );
-
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-
             }
         });
     }
@@ -172,5 +201,40 @@ public class DetailEventActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Retourne le taux de remplissage de l'event si il a été
+     * renseigné
+     */
+    private void getFillingRate() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("fillingRate").child(event.getId()+"");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object snap = dataSnapshot.getValue();
+                if(snap != null) {
+                    Long f = (Long) snap;
+                    Integer fillingRate = f.intValue();
+                    seekBar.setProgress(fillingRate);
+                    txtSeekBar.setText(String.format(getString(R.string.detail_event_organisateur_txt), fillingRate));
+                    txtFillingRate.setText(String.format(getString(R.string.detail_event_filling_rate), fillingRate));
+                } else {
+                    seekBar.setProgress(0);
+                    txtSeekBar.setText(String.format(getString(R.string.detail_event_organisateur_txt), 0));
+                    txtFillingRate.setText(String.format(getString(R.string.detail_event_filling_rate), 0));
+                }
+                if (mAuth.getCurrentUser() != null) {
+                    seekBar.setVisibility(View.VISIBLE);
+                    txtSeekBar.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
     }
 }
