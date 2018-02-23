@@ -167,7 +167,7 @@ public class DetailEventActivity extends AppCompatActivity {
                             noteMoyenne += Double.parseDouble(note);
                         }
                     }
-                    noteGlobale.setText("Note moyenne "+ noteMoyenne / (notes.size() ) );
+                    noteGlobale.setText("Note moyenne "+ (double)Math.round((noteMoyenne / notes.size() )*10)/10 );
                 }
             }
 

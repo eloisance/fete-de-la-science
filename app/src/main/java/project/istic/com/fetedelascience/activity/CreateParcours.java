@@ -120,7 +120,7 @@ public class CreateParcours extends AppCompatActivity {
 
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                Log.d("tag",s.toString());
+
                 if(s ==null || s.toString().equals("")){
                     resetResearch();
                 }
