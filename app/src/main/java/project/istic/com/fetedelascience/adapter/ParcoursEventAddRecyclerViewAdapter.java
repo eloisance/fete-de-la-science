@@ -94,7 +94,15 @@ public class ParcoursEventAddRecyclerViewAdapter extends RecyclerView.Adapter< P
     }
 
     public void addEvent(Event event){
-        if(!parcours.contains(event)) {
+        Log.d("size",parcours.size()+"");
+        boolean contains = false;
+        for(Event event1 : parcours){
+            if(event.getId() == event1.getId()){
+                contains = true;
+            }
+
+        }
+        if(!contains) {
             parcours.add(event);
             notifyDataSetChanged();
         } else {
