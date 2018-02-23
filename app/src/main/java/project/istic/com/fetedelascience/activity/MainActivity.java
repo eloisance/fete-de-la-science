@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Menu menu = navigationView.getMenu();
             MenuItem navAdmin = menu.findItem(R.id.drawer_menu_admin);
             FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (mAuth.getCurrentUser() != null) {
+            if (user != null) {
                 Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getEmail());
                 navAdmin.setTitle(R.string.navdrawer_logout);
                 headerName.setText(R.string.navdrawer_default_header_email);
