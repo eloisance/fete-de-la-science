@@ -42,6 +42,9 @@ public class DetailParcoursActivity extends AppCompatActivity {
     @BindView(R.id.title_parcours)
     TextView title;
 
+    @BindView(R.id.user_parcours)
+    TextView user;
+
     @BindView(R.id.list_event_detail_parcours)
     RecyclerView mRecycler;
 
@@ -72,6 +75,11 @@ public class DetailParcoursActivity extends AppCompatActivity {
 
 
         this.title.setText(parcours.getName());
+        String idUser = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        if(parcours.getIdUser().equals(idUser)){
+            user.setText(R.string.user_parcours);
+        }
 
         mRecycler.setHasFixedSize(true);
 

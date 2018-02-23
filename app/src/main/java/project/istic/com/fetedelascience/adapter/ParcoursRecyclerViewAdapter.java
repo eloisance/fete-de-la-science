@@ -2,7 +2,9 @@ package project.istic.com.fetedelascience.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,6 +90,12 @@ public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursR
             intent.putExtra("parcours", (Parcelable) parcoursfilter.get(position));
             context.startActivity(intent);
         });
+
+        String idUser = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        if(this.parcoursfilter.get(position).getIdUser().equals(idUser)){
+            holder.mTitle.setTextColor(Color.rgb(253,66,129));
+        }
     }
 
     @Override
