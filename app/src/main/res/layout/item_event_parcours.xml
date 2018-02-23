@@ -11,20 +11,20 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="#000"
+            tools:text="Numéro" />
+
+        <TextView
             android:id="@+id/event_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textColor="#000"
             tools:text="Titre de l'event" />
-
-        <TextView
-            android:id="@+id/event_city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textColor="#000"
-            tools:text="Ville de l'event" />
 
     </LinearLayout>
 

@@ -77,7 +77,7 @@ public class DetailEventActivity extends AppCompatActivity {
         idUser = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
-        setTitle("Détail event");
+        setTitle("Détail événement");
         if(getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

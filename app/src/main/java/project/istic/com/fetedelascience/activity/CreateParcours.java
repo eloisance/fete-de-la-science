@@ -94,7 +94,7 @@ public class CreateParcours extends AppCompatActivity {
         mAdapterEvent = new ParcoursEventRecyclerViewAdapter(this, cursor, preparedQuery);
         listEvent.setAdapter(mAdapterEvent);
 
-        mAdapterParcours = new ParcoursEventAddRecyclerViewAdapter();
+        mAdapterParcours = new ParcoursEventAddRecyclerViewAdapter(this,listAddEvent);
         listAddEvent.setAdapter(mAdapterParcours);
 
         search.addTextChangedListener(new TextWatcher() {

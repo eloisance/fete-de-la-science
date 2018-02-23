@@ -51,5 +51,8 @@
     <string name="hint_search">Chercher vos événements</string>
     <string name="text_popup_name_parcours">Le nom de votre parcours</string>
     <string name="text_popup_error">Il faut au moins un événement pour créer un parcours</string>
+    <string name="text_popup_error_containt">Cette évenement est déja ajouté à votre parcours</string>
     <string name="text_popup_create">Votre Parcours a bien été créé</string>
+
+
 </resources>

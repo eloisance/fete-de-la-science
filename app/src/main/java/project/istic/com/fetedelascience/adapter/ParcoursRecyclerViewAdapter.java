@@ -1,6 +1,8 @@
 package project.istic.com.fetedelascience.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.activity.DetailParcoursActivity;
 import project.istic.com.fetedelascience.model.Parcours;
 
 public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursRecyclerViewAdapter.ViewHolder> implements Filterable {
@@ -44,9 +47,9 @@ public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursR
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context, DetailEventActivity.class);
-//                intent.putExtra("event", event);
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, DetailParcoursActivity.class);
+                intent.putExtra("parcours", (Parcelable) parcours.get(position));
+                context.startActivity(intent);
             }
         });
     }

@@ -16,22 +16,27 @@ import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.activity.CreateParcours;
 import project.istic.com.fetedelascience.model.Event;
 import project.istic.com.fetedelascience.model.Parcours;
+import project.istic.com.fetedelascience.util.UIHelper;
 
 public class ParcoursEventAddRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursEventAddRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     ArrayList<Event> parcours;
 
+    Context context;
 
+    View view;
 
-    public ParcoursEventAddRecyclerViewAdapter() {
+    public ParcoursEventAddRecyclerViewAdapter(Context context,View view) {
         this.parcours = new ArrayList<>();
+        this.context = context;
+        this.view = view;
 
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_event, parent, false);
+                .inflate(R.layout.item_event_parcours, parent, false);
         return new ViewHolder(view);
     }
 
@@ -40,15 +45,12 @@ public class ParcoursEventAddRecyclerViewAdapter extends RecyclerView.Adapter< P
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mTitle.setText(this.parcours.get(position).getTitle());
-        holder.mCity.setText(this.parcours.get(position).getVille());
+        holder.mNumber.setText(1+position+"");
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parcours.remove(parcours.get(position));
-                notifyDataSetChanged();
+        holder.mView.setOnClickListener(v -> {
+            parcours.remove(parcours.get(position));
+            notifyDataSetChanged();
 
-            }
         });
     }
 
@@ -62,13 +64,13 @@ public class ParcoursEventAddRecyclerViewAdapter extends RecyclerView.Adapter< P
 
         private View mView;
         private TextView mTitle;
-        private TextView mCity;
+        private TextView mNumber;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
             mTitle = (TextView) view.findViewById(R.id.event_title);
-            mCity = (TextView) view.findViewById(R.id.event_city);
+            mNumber = (TextView) view.findViewById(R.id.number);
         }
     }
 
@@ -92,8 +94,13 @@ public class ParcoursEventAddRecyclerViewAdapter extends RecyclerView.Adapter< P
     }
 
     public void addEvent(Event event){
-        parcours.add(event);
-        notifyDataSetChanged();
+        if(!parcours.contains(event)) {
+            parcours.add(event);
+            notifyDataSetChanged();
+        } else {
+            UIHelper.showSnackbar( this.view,this.context, this.context.getString(R.string.text_popup_error_containt), "OK");
+
+        }
     }
 
     public ArrayList<Event> getParcours() {
