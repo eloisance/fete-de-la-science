@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,8 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.adapter.FilteredCursor;
+import project.istic.com.fetedelascience.adapter.FilteredCursorFactory;
 import project.istic.com.fetedelascience.adapter.MyEventRecyclerViewAdapter;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;
@@ -33,6 +36,8 @@ public class EventListviewFragment extends Fragment {
     private RecyclerView mRecycler;
 
     private SearchView searchView;
+
+
 
 
     @Override
@@ -84,13 +89,37 @@ public class EventListviewFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mAdapter.getFilter().filter(query);
+
+                FilteredCursor filtered = FilteredCursorFactory.createUsingSelector(mAdapter.getCursorOriginal(), new FilteredCursorFactory.Selector() {
+                    int nameIndex = -1;
+
+                    @Override
+                    public boolean select(Cursor cursor) {
+
+                        if (nameIndex == -1) {
+                            nameIndex = cursor.getColumnIndex(Event.TITLE_FIELD_NAME);
+
+                        }
+                        if(query == null || query.equals("")) {
+                            return true;
+                        }
+
+                        if (cursor.getString(nameIndex).toLowerCase().contains(query.toLowerCase())) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+                mAdapter.swapCursor(filtered);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                mAdapter.getFilter().filter(query);
+                if(query == null ||query.equals("")){
+                    mAdapter.swapCursor(mAdapter.getCursorOriginal());
+                }
                 return false;
             }
         });

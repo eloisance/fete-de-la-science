@@ -13,6 +13,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.activity.DetailParcoursActivity;
@@ -21,16 +22,54 @@ import project.istic.com.fetedelascience.model.Parcours;
 public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     ArrayList<Parcours> parcours;
+    ArrayList<Parcours> parcoursfilter;
 
     private Context context;
+
+    private Filter filter;
 
     public ParcoursRecyclerViewAdapter(Context c, ArrayList<Parcours> parcours) {
         this.context = c;
         if(parcours == null){
             this.parcours = new ArrayList<>();
+            this.parcoursfilter = new ArrayList<>();
         } else {
             this.parcours = parcours;
+            this.parcoursfilter = parcours;
         }
+        filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String filterString = charSequence.toString().toLowerCase();
+
+                FilterResults results = new FilterResults();
+
+                final List<Parcours> list = parcours;
+
+                int count = list.size();
+                final ArrayList<Parcours> nlist = new ArrayList<Parcours>(count);
+
+                String filterableString ;
+
+                for (int i = 0; i < count; i++) {
+                    filterableString = list.get(i).getName();
+                    if (filterableString.toLowerCase().contains(filterString)) {
+                        nlist.add(list.get(i));
+                    }
+                }
+
+                results.values = nlist;
+                results.count = nlist.size();
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults results) {
+                parcoursfilter = (ArrayList<Parcours>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     @Override
@@ -42,21 +81,18 @@ public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursR
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTitle.setText(this.parcours.get(position).getName());
+        holder.mTitle.setText(this.parcoursfilter.get(position).getName());
         holder.mSize.setText("Nombre d'évenement : "+this.parcours.get(position).numberEvent());
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailParcoursActivity.class);
-                intent.putExtra("parcours", (Parcelable) parcours.get(position));
-                context.startActivity(intent);
-            }
+        holder.mView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailParcoursActivity.class);
+            intent.putExtra("parcours", (Parcelable) parcoursfilter.get(position));
+            context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return this.parcours.size();
+        return this.parcoursfilter.size();
     }
 
 
@@ -77,25 +113,11 @@ public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursR
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                FilterResults filterResults = new FilterResults();
-                Log.d("ds", "performFiltering");
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                // contactListFiltered = (ArrayList<Contact>) filterResults.values;
-                Log.d("ds", "publishResults");
-                notifyDataSetChanged();
-            }
-        };
+        return filter;
     }
 
-    public void setParcours(ArrayList<Parcours> parcours) {
-        this.parcours = parcours;
+    public void reset() {
 
     }
+
 }

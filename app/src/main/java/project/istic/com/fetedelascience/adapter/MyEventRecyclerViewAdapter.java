@@ -14,16 +14,20 @@ import android.widget.TextView;
 
 import com.j256.ormlite.stmt.PreparedQuery;
 
+import java.util.List;
+
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.activity.DetailEventActivity;
 import project.istic.com.fetedelascience.model.Event;
 
-public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyEventRecyclerViewAdapter.ViewHolder> implements Filterable {
+public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyEventRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
 
     public MyEventRecyclerViewAdapter(Context c, Cursor cursor, PreparedQuery<Event> preparedQuery) {
         super(cursor, preparedQuery);
+
+
         this.context = c;
     }
 
@@ -40,13 +44,10 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
         holder.mTitle.setText(event.getTitle());
         holder.mCity.setText(event.getVille());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailEventActivity.class);
-                intent.putExtra("event", event);
-                context.startActivity(intent);
-            }
+        holder.mView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailEventActivity.class);
+            intent.putExtra("event", event);
+            context.startActivity(intent);
         });
     }
 
@@ -64,23 +65,6 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
         }
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                FilterResults filterResults = new FilterResults();
-                Log.d("ds", "performFiltering");
-                return filterResults;
-            }
 
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                // contactListFiltered = (ArrayList<Contact>) filterResults.values;
-                Log.d("ds", "publishResults");
-                notifyDataSetChanged();
-            }
-        };
-    }
 
 }

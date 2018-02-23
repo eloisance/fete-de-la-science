@@ -11,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +35,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.adapter.FilteredCursor;
+import project.istic.com.fetedelascience.adapter.FilteredCursorFactory;
 import project.istic.com.fetedelascience.adapter.MyEventRecyclerViewAdapter;
 import project.istic.com.fetedelascience.adapter.ParcoursEventAddRecyclerViewAdapter;
 import project.istic.com.fetedelascience.adapter.ParcoursEventRecyclerViewAdapter;
@@ -67,7 +72,7 @@ public class CreateParcours extends AppCompatActivity {
         if(getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        search.setFocusable(false);
+
         listEvent.setHasFixedSize(true);
         listAddEvent.setHasFixedSize(true);
 
@@ -97,33 +102,36 @@ public class CreateParcours extends AppCompatActivity {
         mAdapterParcours = new ParcoursEventAddRecyclerViewAdapter(this,listAddEvent);
         listAddEvent.setAdapter(mAdapterParcours);
 
+        search.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                research(search.getText().toString());
+                return true;
+            }
+            return false;
+        });
+
         search.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) {}
 
-            }
-
-            @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
             }
 
-            @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-
+                Log.d("tag",s.toString());
+                if(s ==null || s.toString().equals("")){
+                    resetResearch();
+                }
             }
         });
 
-        valider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mAdapterParcours.getParcours().size()!=0) {
-                    enterName();
-                } else {
-                    UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.text_popup_error), "OK");
-                }
+        valider.setOnClickListener(v -> {
+            if(mAdapterParcours.getParcours().size()!=0) {
+                enterName();
+            } else {
+                UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.text_popup_error), "OK");
             }
         });
     }
@@ -143,6 +151,35 @@ public class CreateParcours extends AppCompatActivity {
         this.mAdapterParcours.addEvent(event);
     }
 
+
+    private void research(String query){
+        FilteredCursor filtered = FilteredCursorFactory.createUsingSelector(mAdapterEvent.getCursorOriginal(), new FilteredCursorFactory.Selector() {
+            int nameIndex = -1;
+
+            @Override
+            public boolean select(Cursor cursor) {
+
+                if (nameIndex == -1) {
+                    nameIndex = cursor.getColumnIndex(Event.TITLE_FIELD_NAME);
+
+                }
+                if(query == null || query.equals("")) {
+                    return true;
+                }
+
+                if (cursor.getString(nameIndex).toLowerCase().contains(query.toLowerCase())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        mAdapterEvent.swapCursor(filtered);
+    }
+
+    private void resetResearch(){
+        mAdapterEvent.swapCursor(mAdapterEvent.getCursorOriginal());
+    }
 
     public void enterName(){
         // get prompts.xml view

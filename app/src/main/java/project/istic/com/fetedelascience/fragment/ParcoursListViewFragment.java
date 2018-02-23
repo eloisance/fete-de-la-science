@@ -70,13 +70,19 @@ public class ParcoursListViewFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mAdapter.getFilter().filter(query);
+                if(mAdapter != null) {
+                    mAdapter.getFilter().filter(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                mAdapter.getFilter().filter(query);
+                if(mAdapter != null) {
+                    if(query == null || query.equals("")) {
+                        mAdapter.getFilter().filter(query);
+                    }
+                }
                 return false;
             }
         });

@@ -158,7 +158,7 @@ public class DetailEventActivity extends AppCompatActivity {
 
                 HashMap<String,String> notes = (HashMap<String,String>)dataSnapshot.getValue();
                 if(notes == null){
-                    noteGlobale.setText("Pas encore de note");
+                    noteGlobale.setText(getString(R.string.not_note));
                 } else {
                     double noteMoyenne = 0;
                     for(HashMap.Entry<String, String> entry : notes.entrySet()) {

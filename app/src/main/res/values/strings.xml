@@ -44,6 +44,8 @@
     <string name="headerDescription">Description</string>
     <string name="detail_event_organisateur_txt">Organisateur, mettez à jour le taux de remplissage, actuellement : %1$d%%</string>
     <string name="detail_event_filling_rate">Taux de remplissage: %1$d%%</string>
+    <string name="not_note">Pas encore de note</string>
+    <string name="note_moyenne">Note moyenne </string>
 
     <!--activity_create_parcours-->
     <string name="tutorial">Rechercher vos événements favories via le truc ci dessus. Puis ajouter les à votre parcours grace aux boutons "+" </string>
