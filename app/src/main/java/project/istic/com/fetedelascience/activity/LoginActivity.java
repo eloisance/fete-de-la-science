@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_btn_signin_default)
     Button btnSubmit;
+
+    @BindView(R.id.login_loader)
+    ProgressBar loader;
 
     private FirebaseAuth mAuth;
 
@@ -76,7 +81,9 @@ public class LoginActivity extends AppCompatActivity {
      * @param password Password
      */
     private void signIn(String email, String password) {
+        loader.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            loader.setVisibility(View.GONE);
             if (task.isSuccessful()) {
                 Log.d(TAG, "signInWithEmail:success");
                 finish();

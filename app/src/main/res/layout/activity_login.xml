@@ -46,4 +46,14 @@
         android:textColor="@android:color/white"
         android:layout_alignParentEnd="true" />
 
+    <ProgressBar
+        android:id="@+id/login_loader"
+        style="?android:attr/progressBarStyle"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_btn_signin_default"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
 </RelativeLayout>
