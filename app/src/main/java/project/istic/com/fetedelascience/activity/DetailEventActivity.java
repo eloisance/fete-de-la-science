@@ -6,11 +6,14 @@ import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.model.Event;
 
+import android.content.Intent;
 import android.provider.Settings;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
@@ -123,10 +126,24 @@ public class DetailEventActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_event_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_share:
+                share(this.event.getTitle(), this.event.getVille());
+                return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(DetailEventActivity.this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -236,5 +253,14 @@ public class DetailEventActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void share(String title, String city) {
+        String text = String.format(getString(R.string.share_txt), title, city);
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Partager via"));
     }
 }
