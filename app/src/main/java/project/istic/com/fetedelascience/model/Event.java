@@ -17,6 +17,7 @@ public class Event implements Parcelable {
     public static final String LIEN_FIELD_NAME = "lien";
     public static final String DESCRIPTION_FIELD_NAME = "description";
     public static final String DATE_FIELD_NAME = "resume_dates_fr";
+    public static final String DATE_DEBUT_FIELD_NAME = "date_debut";
 
 
     @DatabaseField(id = true)

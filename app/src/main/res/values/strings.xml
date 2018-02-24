@@ -59,5 +59,9 @@
     <!--activity_detail_parcours-->
     <string name="user_parcours">Vous avez créé ce parcours</string>
 
+    <!--fragment_listevent-->
+    <string name="popup_filtre_titre">Titre</string>
+    <string name="popup_filtre_ville">Ville</string>
+    <string name="popup_filtre_date">Date</string>
 
 </resources>

@@ -3,16 +3,18 @@ package project.istic.com.fetedelascience.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import com.j256.ormlite.android.AndroidDatabaseResults;
 import com.j256.ormlite.dao.CloseableIterator;
@@ -34,8 +36,10 @@ public class EventListviewFragment extends Fragment {
     private MyEventRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mManager;
     private RecyclerView mRecycler;
-
-    private SearchView searchView;
+    /**
+     * Popup filter
+     */
+    private AlertDialog alertDialogFilter;
 
 
 
@@ -55,6 +59,8 @@ public class EventListviewFragment extends Fragment {
 
         mManager = new LinearLayoutManager(getActivity());
         mRecycler.setLayoutManager(mManager);
+
+        alertDialogFilter = createPopupFilter();
 
 
         DBManager manager = DBManager.getInstance();
@@ -82,58 +88,114 @@ public class EventListviewFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.list_event_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        MenuItem searchView =  menu.findItem(R.id.action_search);
+        searchView.setVisible(false);
 
-        // listening to search query text change
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                FilteredCursor filtered = FilteredCursorFactory.createUsingSelector(mAdapter.getCursorOriginal(), new FilteredCursorFactory.Selector() {
-                    int nameIndex = -1;
-
-                    @Override
-                    public boolean select(Cursor cursor) {
-
-                        if (nameIndex == -1) {
-                            nameIndex = cursor.getColumnIndex(Event.TITLE_FIELD_NAME);
-
-                        }
-                        if(query == null || query.equals("")) {
-                            return true;
-                        }
-
-                        if (cursor.getString(nameIndex).toLowerCase().contains(query.toLowerCase())) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-                mAdapter.swapCursor(filtered);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                if(query == null ||query.equals("")){
-                    mAdapter.swapCursor(mAdapter.getCursorOriginal());
-                }
-                return false;
-            }
-        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
+            case R.id.action_filter:
+                alertDialogFilter.show();
                 return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
+
         }
 
-        return false;
     }
+
+    public AlertDialog createPopupFilter(){
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(getContext());
+        View promptsView = li.inflate(R.layout.popup_filter_event, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( getContext());
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText title = promptsView
+                .findViewById(R.id.input_filter_title);
+        final EditText ville = promptsView
+                .findViewById(R.id.input_filter_ville);
+        final EditText date = promptsView
+                .findViewById(R.id.input_filter_date);
+
+        final CheckBox titleBox = promptsView
+                .findViewById(R.id.checkBoxTitle);
+        final CheckBox villeBox = promptsView
+                .findViewById(R.id.checkBoxVille);
+        final CheckBox dateBox = promptsView
+                .findViewById(R.id.checkBoxDate);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(true)
+                .setPositiveButton("OK",
+                        (dialog, id) -> {
+
+
+                            FilteredCursor filtered = FilteredCursorFactory.createUsingSelector(mAdapter.getCursorOriginal(), new FilteredCursorFactory.Selector() {
+                                @Override
+                                public boolean select(Cursor cursor) {
+                                    boolean filter = true;
+                                    if(titleBox.isChecked()){
+                                        filter = filter && filter(cursor,Event.TITLE_FIELD_NAME,title.getText().toString());
+                                    }
+
+                                    if(villeBox.isChecked()){
+                                        filter = filter && filter(cursor,Event.VILLE_FIELD_NAME,ville.getText().toString());
+                                    }
+
+                                    if(dateBox.isChecked()){
+                                        filter = filter && filter(cursor,Event.DATE_FIELD_NAME,date.getText().toString());
+                                    }
+
+
+                                    return filter;
+                                }
+                            });
+                            mAdapter.swapCursor(filtered);
+
+
+
+                        }).setNegativeButton("Pas de filtre",
+                (dialog, id) -> {
+                    mAdapter.swapCursor(mAdapter.getCursorOriginal());
+                    dialog.cancel();
+
+                                });
+
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+       return alertDialog;
+    }
+
+    private boolean filter(Cursor cursor,String nameColumn,String query){
+        int nameIndex = -1;
+        if (nameIndex == -1) {
+            nameIndex = cursor.getColumnIndex(nameColumn);
+
+        }
+        if(query == null || query.equals("")) {
+            return true;
+        }
+
+        if (cursor.getString(nameIndex) != null && cursor.getString(nameIndex).toLowerCase().contains(query.toLowerCase())) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
 }

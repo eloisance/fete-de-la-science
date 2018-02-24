@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <CheckBox
+        android:id="@+id/checkBoxTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popup_filtre_titre"
+        android:checked="true"/>
+
+    <EditText
+        android:id="@+id/input_filter_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <requestFocus />
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/checkBoxVille"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popup_filtre_ville" />
+
+    <EditText
+        android:id="@+id/input_filter_ville"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/checkBoxDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popup_filtre_date" />
+
+    <EditText
+        android:id="@+id/input_filter_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </EditText>
+</LinearLayout>
