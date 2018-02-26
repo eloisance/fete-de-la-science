@@ -78,6 +78,7 @@
     <string name="text_popup_error">Il faut au moins un événement pour créer un parcours</string>
     <string name="text_popup_error_containt">Cette évenement est déja ajouté à votre parcours</string>
     <string name="text_popup_create">Votre Parcours a bien été créé</string>
+    <string name="text_popup_empty">Votre parcours doit contenir un nom</string>
 
     <!--activity_detail_parcours-->
     <string name="user_parcours">Vous avez créé ce parcours</string>

@@ -214,17 +214,22 @@ public class CreateParcours extends AppCompatActivity {
                         (dialog, id) -> {
                             // get user input and set it to result
                             // edit text
-                            String idUser = Settings.Secure.getString(getContentResolver(),
-                                    Settings.Secure.ANDROID_ID);
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("parcours");
-                            ArrayList<Integer> idEvent = new ArrayList<>();
-                            for (Event event : mAdapterParcours.getParcours()){
-                                idEvent.add(event.getId());
-                            }
+                            if(userInput.getText().toString().length() != 0) {
+                                String idUser = Settings.Secure.getString(getContentResolver(),
+                                        Settings.Secure.ANDROID_ID);
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference("parcours");
+                                ArrayList<Integer> idEvent = new ArrayList<>();
+                                for (Event event : mAdapterParcours.getParcours()){
+                                    idEvent.add(event.getId());
+                                }
 
-                            myRef.push().setValue(new Parcours(userInput.getText().toString(),idEvent,idUser));
-                            finish();
+                                    myRef.push().setValue(new Parcours(userInput.getText().toString(), idEvent, idUser));
+                                    finish();
+                            } else {
+                                UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.text_popup_empty), "OK");
+
+                            }
 
                         }).setNegativeButton("Cancel",
                 (dialog, id) -> dialog.cancel());
