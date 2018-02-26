@@ -33,7 +33,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.fragment.EventListviewFragment;
 import project.istic.com.fetedelascience.fragment.ParcoursListViewFragment;
-import project.istic.com.fetedelascience.fragment.StatsViewFragment;
 import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.global.PrefManager;
 import project.istic.com.fetedelascience.helper.DBManager;
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setFragment(new ParcoursListViewFragment(), (String) item.getTitle());
                 break;
             case R.id.drawer_menu_stats:
-                setFragment(new StatsViewFragment(), (String) item.getTitle());
+                openActivity(StatsActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
             case R.id.drawer_menu_admin:
                 if (mAuth.getCurrentUser() != null) {
                     FirebaseAuth.getInstance().signOut();
