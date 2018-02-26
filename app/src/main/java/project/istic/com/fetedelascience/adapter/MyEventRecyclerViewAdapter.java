@@ -30,7 +30,7 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_event, parent, false);
+                .inflate(R.layout.item_event_extend, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,6 +38,15 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, final Event event) {
 
         holder.mTitle.setText(event.getTitle());
+        if (event.getDescription() != null) {
+            if (event.getDescription().length() < 100) {
+                holder.mDesc.setText(event.getDescription().substring(0, event.getDescription().length()));
+            } else {
+                holder.mDesc.setText(event.getDescription().substring(0, 100) + "...");
+            }
+        } else {
+            holder.mDesc.setText("");
+        }
         holder.mCity.setText(event.getVille());
 
         holder.mView.setOnClickListener(v -> {
@@ -51,12 +60,14 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
 
         private View mView;
         private TextView mTitle;
+        private TextView mDesc;
         private TextView mCity;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
             mTitle = view.findViewById(R.id.event_title);
+            mDesc = view.findViewById(R.id.event_description);
             mCity = view.findViewById(R.id.event_city);
         }
     }
