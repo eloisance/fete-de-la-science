@@ -34,6 +34,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.adapter.FilteredCursor;
 import project.istic.com.fetedelascience.adapter.FilteredCursorFactory;
@@ -53,14 +56,21 @@ public class CreateParcours extends AppCompatActivity {
     @BindView(R.id.valider_parcours)
     Button valider;
 
+    /**
+     * Liste de tous les events
+     */
     @BindView(R.id.create_parcours_list_event)
     RecyclerView listEvent;
 
-    private ParcoursEventRecyclerViewAdapter mAdapterEvent;
-    private ParcoursEventAddRecyclerViewAdapter mAdapterParcours;
-
+    /**
+     * Liste d'Event ajouté au parcours
+     */
     @BindView(R.id.create_parcours_list_add)
     RecyclerView listAddEvent;
+
+
+    private ParcoursEventRecyclerViewAdapter mAdapterEvent;
+    private ParcoursEventAddRecyclerViewAdapter mAdapterParcours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,38 +112,33 @@ public class CreateParcours extends AppCompatActivity {
         mAdapterParcours = new ParcoursEventAddRecyclerViewAdapter(this,listAddEvent);
         listAddEvent.setAdapter(mAdapterParcours);
 
-        search.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                research(search.getText().toString());
-                return true;
+    }
+
+
+
+    @OnTextChanged(value = R.id.search_parcours,callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void  textChangedSearch(Editable editable) {
+        if(editable == null || editable.toString().equals("")){
+            resetResearch();
+        }
+    }
+
+    @OnEditorAction(R.id.search_parcours)
+    public boolean validerResearch(int actionId){
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            research(search.getText().toString());
+            return true;
             }
-            return false;
-        });
+        return  false;
+    }
 
-        search.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {}
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-
-                if(s ==null || s.toString().equals("")){
-                    resetResearch();
-                }
-            }
-        });
-
-        valider.setOnClickListener(v -> {
-            if(mAdapterParcours.getParcours().size()!=0) {
-                enterName();
-            } else {
-                UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.text_popup_error), "OK");
-            }
-        });
+    @OnClick(R.id.valider_parcours)
+    public void valider() {
+        if(mAdapterParcours.getParcours().size()!=0) {
+            enterName();
+        } else {
+            UIHelper.showSnackbar(findViewById(android.R.id.content), getApplicationContext(), getString(R.string.text_popup_error), "OK");
+        }
     }
 
     @Override
@@ -147,11 +152,18 @@ public class CreateParcours extends AppCompatActivity {
         }
     }
 
+    /**
+     * Ajout un event à la liste de création de parcours
+     * @param event
+     */
     public void addEventToParcours(Event event){
         this.mAdapterParcours.addEvent(event);
     }
 
-
+    /**
+     *  Filtre sur le nom des events de la liste des events
+     * @param query nom des events recherché
+     */
     private void research(String query){
         FilteredCursor filtered = FilteredCursorFactory.createUsingSelector(mAdapterEvent.getCursorOriginal(), new FilteredCursorFactory.Selector() {
             int nameIndex = -1;
@@ -177,11 +189,17 @@ public class CreateParcours extends AppCompatActivity {
         mAdapterEvent.swapCursor(filtered);
     }
 
+    /**
+     * on remet tous les events dans la liste d'event (de gauche)
+     */
     private void resetResearch(){
         mAdapterEvent.swapCursor(mAdapterEvent.getCursorOriginal());
     }
 
-    public void enterName(){
+    /**
+     * Popup pour entrer le nom du parcours lors de la validation du parcours
+      */
+    private void enterName(){
         // get prompts.xml view
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.popup_name_parcours, null);

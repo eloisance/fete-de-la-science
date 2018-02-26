@@ -166,6 +166,9 @@ public class DetailEventActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Note moyenne de l'event
+     */
     private void noteGlobaleUpdate(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("notation");
@@ -195,6 +198,9 @@ public class DetailEventActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Note de l'utilisateur sur l'event
+     */
     private void getMyNote(){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

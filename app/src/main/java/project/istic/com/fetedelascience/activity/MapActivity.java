@@ -35,7 +35,6 @@ import project.istic.com.fetedelascience.model.Event;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, ClusterManager.OnClusterClickListener<MapItem>, ClusterManager.OnClusterItemClickListener<MapItem>, ClusterManager.OnClusterInfoWindowClickListener<MapItem>, ClusterManager.OnClusterItemInfoWindowClickListener<MapItem> {
 
-    //@BindView(R.id.map) SupportMapFragment map;
     SupportMapFragment mapFragment;
     private GoogleMap mMap;
     List<Event> events;

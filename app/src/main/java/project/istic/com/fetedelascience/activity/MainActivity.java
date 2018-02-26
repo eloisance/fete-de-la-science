@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.fragment.EventListviewFragment;
@@ -39,29 +43,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "MainActivity";
 
-    private PrefManager prefManager;
-
     private FirebaseAuth mAuth;
 
-    private AppBarLayout appBar;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
-    private NavigationView navigationView;
-    private FloatingActionButton fab;
-    private DrawerLayout drawer;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
-    private TextView headerEmail;
-    private TextView headerName;
-    private CircleImageView headerPhoto;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    TextView headerEmail;
+
+    TextView headerName;
+
+    CircleImageView headerPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        appBar = (AppBarLayout) findViewById(R.id.appBar);
 
         DBManager.init(this);
 
@@ -86,32 +94,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // Init FloatingActionButton
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         if(fab != null) {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_24dp));
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openActivity(CreateParcours.class,0);
-                }
-            });
+
         }
 
-        this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer != null) {
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navdrawer_open, R.string.navdrawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
         }
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
             View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
-            headerEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
-            headerName = (TextView) headerView.findViewById(R.id.nav_header_name);
-            headerPhoto = (CircleImageView) headerView.findViewById(R.id.nav_header_photo);
-
+            headerEmail = headerView.findViewById(R.id.nav_header_email);
+            headerName = headerView.findViewById(R.id.nav_header_name);
+            headerPhoto = headerView.findViewById(R.id.nav_header_photo);navigationView.setNavigationItemSelectedListener(this);
             headerName.setText(getString(R.string.navdrawer_default_header_name));
             headerEmail.setText(getString(R.string.navdrawer_default_header_email));
             headerPhoto.setImageBitmap(null);
@@ -122,6 +120,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setFragment(listviewFragment, "Liste");
         this.onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
+    }
+
+    @OnClick(R.id.fab)
+    public void fabOnClick(){
+        openActivity(CreateParcours.class,0);
     }
 
     @Override
