@@ -116,15 +116,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void setUpClusterer(GoogleMap googleMap) {
-//        // Position the map.
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.859489,2.320582), 20));
-//
-//        // Initialize the manager with the context and the map.
-//        // (Activity extends context, so we can pass 'this' in the constructor.)
+
         this.mClusterManager = new ClusterManager<MapItem>(this, googleMap, this.markerManager);
-//
-//        // Point the map's listeners at the listeners implemented by the cluster
-//        // manager.
+
         googleMap.setOnCameraIdleListener(this.mClusterManager);
         googleMap.setOnMarkerClickListener(this.mClusterManager);
         this.mClusterManager.setOnClusterClickListener(this);
@@ -135,18 +129,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         googleMap.setOnInfoWindowClickListener(this.mClusterManager);
 
 
-
-//        googleMap.setOnMapClickListener(this);
     }
 
 
     @Override
     public boolean onClusterClick(Cluster<MapItem> cluster) {
-        // Show a toast with some info when the cluster is clicked.
+
         String title = "";
-                //= cluster.getItems().iterator().next().getTitle();
-        //Log.d("CLUSTER", title); //String title =
-        // Create the builder to collect all essential cluster items for the bounds.
+
 
         if(cluster.getSize() > 200) {
             return false;
@@ -166,26 +156,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onClusterInfoWindowClick(Cluster<MapItem> cluster) {
-        // Does nothing, but you could go to a list of the users.
-        Log.d("trucWind", "taille: " + cluster.getSize());
     }
 
     @Override
     public boolean onClusterItemClick(MapItem item) {
-        // Does nothing, but you could go into the user's profile page, for example.
-        Log.d("TRUCITEM", item.getEvent().getTitle());
-//        Intent intent = new Intent(this, DetailEventActivity.class);
-//        intent.putExtra("event", item.getEvent());
-//        this.startActivity(intent);
+
         return false;
     }
 
 
     @Override
     public void onClusterItemInfoWindowClick(MapItem item) {
-        // Does nothing, but you could go into the user's profile page, for example.
-        Log.d("WINDOWS", item.getEvent().getDescription());
-        //this.mClusterManager.getMarkerManager().
+
         Intent intent = new Intent(this, DetailEventActivity.class);
         intent.putExtra("event", item.getEvent());
         this.startActivity(intent);

@@ -28,7 +28,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.adapter.StatsRecyclerViewAdapter;
 
 /**
  * Created by jnsll on 26/02/18.
@@ -37,21 +36,10 @@ import project.istic.com.fetedelascience.adapter.StatsRecyclerViewAdapter;
 public class StatsActivity  extends AppCompatActivity {
 
     HashMap<Double, Integer> notesGlobales= new HashMap<Double, Integer>();
-//    @BindView(R.id.title_stats)
-//    TextView title;
-//
-//    @BindView(R.id.user_parcours)
-//    TextView user;
-//
-//    @BindView(R.id.)
-//    RecyclerView mRecycler;
+
     @BindView(R.id.chart)
     BarChart chart;
 
-    private StatsRecyclerViewAdapter mAdapter;
-    private LinearLayoutManager mManager;
-
-    //Parcours parcours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +54,13 @@ public class StatsActivity  extends AppCompatActivity {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-//        mRecycler.setHasFixedSize(true);
-
-        mManager = new LinearLayoutManager(this);
-//        mRecycler.setLayoutManager(mManager);
         noteGlobale();
 
 
     }
 
     private void noteGlobale(){
-        //notesGlobales = new HashMap<Double, Integer>();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("notation");
 
@@ -106,25 +90,18 @@ public class StatsActivity  extends AppCompatActivity {
                     }
                 }
 
-                //graph();
                 List<BarEntry> entries = new ArrayList<BarEntry>();
-                // turn your data into Entry objects
+
                 for (HashMap.Entry<Double, Integer> data : notesGlobales.entrySet()) {
-                    Log.d("ENTRYVALUE", "" + data.getValue());
-                    Log.d("ENTRYKEY", data.getKey().toString());
-                    //Log.d("ENTRYHASH", data.hashCode());
+
                     entries.add(new BarEntry(data.getKey().floatValue(), data.getValue()));
                 }
                 BarDataSet dataSet = new BarDataSet(entries, "Répartition des notes moyennes");
                 int color = getResources().getColor(R.color.colorAccent);
 
-                //dataSet.setColor(0);
-                //dataSet.setValueTextColor(1);
                 dataSet.setColor(color);
-                //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
                 dataSet.setDrawValues(false);
-                //dataSet.setBarBorderWidth(2);
-                        //
 
                 BarData barData = new BarData(dataSet);
                 barData.setBarWidth(0.1f);

@@ -56,8 +56,8 @@ public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter
         ViewHolder(View view) {
             super(view);
             mView = view;
-            mTitle = (TextView) view.findViewById(R.id.event_title);
-            mCity = (TextView) view.findViewById(R.id.event_city);
+            mTitle = view.findViewById(R.id.event_title);
+            mCity = view.findViewById(R.id.event_city);
         }
     }
 

@@ -124,8 +124,4 @@ public class ParcoursRecyclerViewAdapter extends RecyclerView.Adapter< ParcoursR
         return filter;
     }
 
-    public void reset() {
-
-    }
-
 }
