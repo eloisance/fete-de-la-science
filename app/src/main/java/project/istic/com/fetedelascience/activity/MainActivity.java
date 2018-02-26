@@ -183,8 +183,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.drawer_menu_settings:
+                openActivity(SettingsActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
                 break;
-
             default:
                 break;
         }

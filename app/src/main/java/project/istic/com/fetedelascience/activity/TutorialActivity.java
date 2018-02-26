@@ -85,21 +85,18 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
             viewPager.setAdapter(myViewPagerAdapter);
             viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-            btnNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // checking for last page
-                    // if last page home screen will be launched
-                    int current = getItem(+1);
-                    if (current < layouts.length) {
-                        // move to next screen
-                        viewPager.setCurrentItem(current);
+            btnNext.setOnClickListener(v -> {
+                // checking for last page
+                // if last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(current);
+                } else {
+                    if (readyToGo) {
+                        startMainActivity();
                     } else {
-                        if (readyToGo) {
-                            startMainActivity();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Les données ne sont pas encore prêtes !", Toast.LENGTH_LONG).show();
-                        }
+                        Toast.makeText(getApplicationContext(), "Les données ne sont pas encore prêtes !", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -118,7 +115,6 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
     public void onDataLoaded() {
         Log.d(TAG, "onDataLoaded done !");
         readyToGo = true;
-        Toast.makeText(this, "GO !", Toast.LENGTH_LONG).show();
     }
 
     //  viewpager change listener
@@ -129,7 +125,6 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
             addBottomDots(position);
             if (position == layouts.length - 1) {
                 btnNext.setText(getResources().getString(R.string.tutorial_end));
-                //PermissionHelper.checkFineLocationPermission(TutorialActivity.this, false);
             } else {
                 btnNext.setText(getResources().getString(R.string.tutorial_next));
             }
