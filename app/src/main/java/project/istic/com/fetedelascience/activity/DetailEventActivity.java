@@ -141,7 +141,7 @@ public class DetailEventActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_share:
-                share(this.event.getTitle(), this.event.getVille());
+                share(this.event.getTitle(), this.event.getVille(), this.event.getLien());
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(DetailEventActivity.this, SettingsActivity.class);
@@ -262,8 +262,8 @@ public class DetailEventActivity extends AppCompatActivity {
         });
     }
 
-    private void share(String title, String city) {
-        String text = String.format(getString(R.string.share_txt), title, city);
+    private void share(String title, String city, String link) {
+        String text = String.format(getString(R.string.share_txt), title, city, link);
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);

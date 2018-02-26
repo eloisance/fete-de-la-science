@@ -68,7 +68,7 @@
     <string name="not_note">Pas encore de note</string>
     <string name="note_title">Note et taux de remplissage</string>
     <string name="note_moyenne">Note moyenne </string>
-    <string name="share_txt">Salut, cet événement : %1$s à %2$s pourrait t\'intéresser !</string>
+    <string name="share_txt">Salut, cet événement : %1$s à %2$s pourrait t\'intéresser ! %3$s</string>
 
     <!--activity_create_parcours-->
     <string name="tutorial">Rechercher vos événements favories via le truc ci dessus. Puis ajouter les à votre parcours grace aux boutons "+" </string>
