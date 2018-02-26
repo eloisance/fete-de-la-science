@@ -16,13 +16,13 @@
     <string name="title_8">Calcule !</string>
 
     <string name="tuto_1">Nous te proposons un rapide tutoriel afin de découvrir l\'application.</string>
-    <string name="tuto_2">Visualise l\'ensemble des évenements à ne pas manquer autour de chez toi ou plus loin encore</string>
+    <string name="tuto_2">Visualise l\'ensemble des événements à ne pas manquer autour de chez toi ou plus loin encore.</string>
     <string name="tuto_3">Tu peux filtrer les informations via la loupe en haut à droite.</string>
-    <string name="tuto_4">Les événements peuvent être visualisés sur une carte intéractive. En cliquant sur le menu en haut à gauche</string>
-    <string name="tuto_5">Tu peux aussi évaluer la qualité de chaque événement</string>
-    <string name="tuto_6">Des parcours peuvent être créés. Les parcours sont des enchainements d\'évènements.</string>
-    <string name="tuto_7">Tu as aussi la possibilité de regarder les parcours déja fait.</string>
-    <string name="tuto_8">Il y a aussi des Stats</string>
+    <string name="tuto_4">Les événements peuvent être visualisés sur une carte intéractive. En cliquant sur le menu en haut à gauche.</string>
+    <string name="tuto_5">Tu peux aussi évaluer la qualité de chaque événement.</string>
+    <string name="tuto_6">Des parcours peuvent être créés. Les parcours sont des enchaînements d\'évènements.</string>
+    <string name="tuto_7">Tu as aussi la possibilité de regarder les parcours déjà proposés.</string>
+    <string name="tuto_8">Un récapitulatif de la qualité des événements est disponible.</string>
 
 
     <!-- Navigation drawer -->
