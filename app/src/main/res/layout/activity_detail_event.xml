@@ -1,162 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     tools:context="project.istic.com.fetedelascience.activity.DetailEventActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <android.support.constraint.ConstraintLayout
+        <!-- Details even -->
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
 
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:visibility="gone"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:max="100" />
+                android:padding="12dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtSeekBar"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/title_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSeekBar" />
+
+                <TextView
+                    android:id="@+id/description_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="17dp"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@+id/title_event"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/headerAdresseEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/headerAddresse"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintTop_toBottomOf="@+id/description_event"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/adresse_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@+id/headerAdresseEvent"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/headerHoraireEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/headerHoraire"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintTop_toBottomOf="@+id/adresse_event"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/horaire_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@+id/headerHoraireEvent"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/headerLienEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/headerLien"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintTop_toBottomOf="@+id/horaire_event"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/lien_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:autoLink="web"
+                    android:text="TextView"
+                    android:textColorLink="@color/colorPrimary"
+                    app:layout_constraintTop_toBottomOf="@+id/headerLienEvent"
+                    tools:layout_editor_absoluteX="16dp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!-- Notation + Taux de remplissage -->
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/detail_event_organisateur_txt"
-                android:layout_marginBottom="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+                android:padding="8dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/title_event"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txtNotationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:textStyle="bold"
+                    android:text="@string/note_title" />
+
+                <RatingBar
+                    android:id="@+id/notation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:id="@+id/noteGlobale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:text="@string/note_moyenne" />
+
+                <TextView
+                    android:id="@+id/txtFillingRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:text="" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!-- Organisateur -->
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/cardview_organisateur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/txtSeekBar" />
+                android:padding="8dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/description_event"
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@+id/title_event"
-                tools:layout_editor_absoluteX="16dp" />
+                <TextView
+                    android:id="@+id/txtSeekBarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_event_organisateur_title"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
-            <TextView
-                android:id="@+id/headerAdresseEvent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/headerAddresse"
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintTop_toBottomOf="@+id/description_event"
-                tools:layout_editor_absoluteX="16dp" />
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:max="100" />
 
-            <TextView
-                android:id="@+id/adresse_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@+id/headerAdresseEvent"
-                tools:layout_editor_absoluteX="16dp" />
+                <TextView
+                    android:id="@+id/txtSeekBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_event_organisateur_txt"
+                    app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
-            <TextView
-                android:id="@+id/headerHoraireEvent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/headerHoraire"
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintTop_toBottomOf="@+id/adresse_event"
-                tools:layout_editor_absoluteX="16dp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/horaire_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@+id/headerHoraireEvent"
-                tools:layout_editor_absoluteX="16dp" />
+        </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/headerLienEvent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/headerLien"
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintTop_toBottomOf="@+id/horaire_event"
-                tools:layout_editor_absoluteX="16dp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/lien_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:autoLink="web"
-                android:text="TextView"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintTop_toBottomOf="@+id/headerLienEvent"
-                tools:layout_editor_absoluteX="16dp" />
-
-            <RatingBar
-                android:id="@+id/notation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lien_event" />
-
-            <TextView
-                android:id="@+id/noteGlobale"
-                android:layout_width="wrap_content"
-                android:layout_height="21dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/note_moyenne"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notation" />
-
-            <TextView
-                android:id="@+id/txtFillingRate"
-                android:layout_width="wrap_content"
-                android:layout_height="21dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text=""
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/noteGlobale" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</ScrollView>

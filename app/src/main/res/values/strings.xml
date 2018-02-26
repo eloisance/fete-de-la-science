@@ -43,9 +43,11 @@
     <string name="headerHoraire">Horaire</string>
     <string name="headerAddresse">Adresse</string>
     <string name="headerDescription">Description</string>
-    <string name="detail_event_organisateur_txt">Organisateur, mettez à jour le taux de remplissage, actuellement : %1$d%%</string>
+    <string name="detail_event_organisateur_title">Organisateur</string>
+    <string name="detail_event_organisateur_txt">Mettez à jour le taux de remplissage de cet événement, actuellement : %1$d%%</string>
     <string name="detail_event_filling_rate">Taux de remplissage: %1$d%%</string>
     <string name="not_note">Pas encore de note</string>
+    <string name="note_title">Note et taux de remplissage</string>
     <string name="note_moyenne">Note moyenne </string>
     <string name="share_txt">Salut, cet événement : %1$s à %2$s pourrait t\'intéresser !</string>
 

@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,6 +64,9 @@ public class DetailEventActivity extends AppCompatActivity {
 
     @BindView(R.id.txtFillingRate)
     TextView txtFillingRate;
+
+    @BindView(R.id.cardview_organisateur)
+    CardView cardViewOrganisateur;
 
 //    @BindView(R.id.imageEvent)
 //    ImageView imageEvent;
@@ -249,8 +253,7 @@ public class DetailEventActivity extends AppCompatActivity {
                     txtFillingRate.setText(String.format(getString(R.string.detail_event_filling_rate), 0));
                 }
                 if (mAuth.getCurrentUser() != null) {
-                    seekBar.setVisibility(View.VISIBLE);
-                    txtSeekBar.setVisibility(View.VISIBLE);
+                    cardViewOrganisateur.setVisibility(View.VISIBLE);
                 }
             }
 
