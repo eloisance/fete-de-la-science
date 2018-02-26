@@ -28,7 +28,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class MainPreferenceFragment extends PreferenceFragment {
+    public static class MainPreferenceFragment extends PreferenceFragment  {
+
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
