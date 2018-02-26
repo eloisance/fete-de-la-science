@@ -1,5 +1,6 @@
 package project.istic.com.fetedelascience.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.activity.MainActivity;
+import project.istic.com.fetedelascience.activity.SettingsActivity;
 import project.istic.com.fetedelascience.adapter.ParcoursRecyclerViewAdapter;
 import project.istic.com.fetedelascience.model.Parcours;
 
@@ -94,10 +97,10 @@ public class ParcoursListViewFragment extends Fragment {
             case R.id.action_search:
                 return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
 
-        return false;
+
     }
 
     private void getParcours(){

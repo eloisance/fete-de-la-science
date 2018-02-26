@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <item android:id="@+id/menu_icon_settings"
+    <item android:id="@+id/action_settings"
         android:title="@string/menu_icon_settings"
         app:showAsAction="never" />
 

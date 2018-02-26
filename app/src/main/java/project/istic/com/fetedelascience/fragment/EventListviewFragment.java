@@ -1,11 +1,13 @@
 package project.istic.com.fetedelascience.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +26,8 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 
 import project.istic.com.fetedelascience.R;
+import project.istic.com.fetedelascience.activity.MainActivity;
+import project.istic.com.fetedelascience.activity.SettingsActivity;
 import project.istic.com.fetedelascience.util.FilteredCursor;
 import project.istic.com.fetedelascience.util.FilteredCursorFactory;
 import project.istic.com.fetedelascience.adapter.MyEventRecyclerViewAdapter;
@@ -101,6 +105,7 @@ public class EventListviewFragment extends Fragment {
             case R.id.action_filter:
                 alertDialogFilter.show();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 
