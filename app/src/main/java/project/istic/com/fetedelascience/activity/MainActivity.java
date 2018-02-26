@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.drawer_menu_stats:
                 openActivity(StatsActivity.class, Constants.DELAY_OPEN_ACTIVITY_FROM_NAV_DRAWER);
+                break;
             case R.id.drawer_menu_admin:
                 if (mAuth.getCurrentUser() != null) {
                     FirebaseAuth.getInstance().signOut();
