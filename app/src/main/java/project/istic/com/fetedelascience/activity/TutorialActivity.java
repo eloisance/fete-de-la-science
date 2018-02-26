@@ -70,7 +70,12 @@ public class TutorialActivity extends AppCompatActivity implements OnDataLoaded 
             layouts = new int[]{
                     R.layout.slide_tutorial_1,
                     R.layout.slide_tutorial_2,
-                    R.layout.slide_tutorial_3
+                    R.layout.slide_tutorial_3,
+                    R.layout.slide_tutorial_4,
+                    R.layout.slide_tutorial_5,
+                    R.layout.slide_tutorial_6,
+                    R.layout.slide_tutorial_7,
+                    R.layout.slide_tutorial_8
             };
 
             // adding bottom dots

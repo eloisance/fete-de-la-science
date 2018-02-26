@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tutorial_bg">
@@ -14,13 +15,13 @@
         <ImageView
             android:layout_width="@dimen/tutorial_img_width_height"
             android:layout_height="@dimen/tutorial_img_width_height"
-            android:src="@drawable/ic_tutorial_world_white_24dp"
-            android:layout_marginBottom="@dimen/tutorial_img_margin_bottom" />
+            android:layout_marginBottom="@dimen/tutorial_img_margin_bottom"
+            android:src="@android:drawable/btn_star_big_on" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_2"
+            android:text="@string/title_5"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tutorial_title"
             android:textAlignment="center"
@@ -32,11 +33,10 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:text="@string/tuto_2"
+            android:text="@string/tuto_5"
             android:textAlignment="center"
             android:textSize="@dimen/tutorial_description"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
-
 </RelativeLayout>

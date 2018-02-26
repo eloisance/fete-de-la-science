@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenue !"
+            android:text="@string/title_1"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tutorial_title"
             android:textAlignment="center"
@@ -32,7 +32,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:text="Nous te proposons un rapide tutoriel afin de découvrir l'application."
+            android:text="@string/tuto_1"
             android:textAlignment="center"
             android:textSize="@dimen/tutorial_description"
             android:textColor="@android:color/white" />
