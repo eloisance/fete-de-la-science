@@ -61,7 +61,7 @@ public class StatsActivity  extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        setTitle("Statistiques des notes moyennes des événements");
+        setTitle("Répartition des notes");
         if(getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -116,9 +116,11 @@ public class StatsActivity  extends AppCompatActivity {
                     entries.add(new BarEntry(data.getKey().floatValue(), data.getValue()));
                 }
                 BarDataSet dataSet = new BarDataSet(entries, "Répartition des notes moyennes");
+                int color = getResources().getColor(R.color.colorAccent);
+
                 //dataSet.setColor(0);
                 //dataSet.setValueTextColor(1);
-                //dataSet.setColor(R.color.colorAccent);
+                dataSet.setColor(color);
                 //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                 dataSet.setDrawValues(false);
                 //dataSet.setBarBorderWidth(2);
