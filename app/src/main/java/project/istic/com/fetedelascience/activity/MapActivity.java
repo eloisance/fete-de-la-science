@@ -24,7 +24,7 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.util.List;
 
 import butterknife.BindView;
-import project.istic.com.fetedelascience.MapItem;
+import project.istic.com.fetedelascience.model.MapItem;
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;

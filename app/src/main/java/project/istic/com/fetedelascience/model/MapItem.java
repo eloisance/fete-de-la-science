@@ -1,4 +1,4 @@
-package project.istic.com.fetedelascience;
+package project.istic.com.fetedelascience.model;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;

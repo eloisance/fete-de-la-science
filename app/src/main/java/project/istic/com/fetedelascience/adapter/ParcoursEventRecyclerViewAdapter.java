@@ -1,7 +1,5 @@
 package project.istic.com.fetedelascience.adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,8 +14,8 @@ import com.j256.ormlite.stmt.PreparedQuery;
 
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.activity.CreateParcours;
-import project.istic.com.fetedelascience.activity.DetailEventActivity;
 import project.istic.com.fetedelascience.model.Event;
+import project.istic.com.fetedelascience.util.OrmliteCursorRecyclerViewAdapter;
 
 public class ParcoursEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, ParcoursEventRecyclerViewAdapter.ViewHolder> implements Filterable {
 

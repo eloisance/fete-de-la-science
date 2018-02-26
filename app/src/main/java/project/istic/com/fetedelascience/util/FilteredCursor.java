@@ -1,4 +1,4 @@
-package project.istic.com.fetedelascience.adapter;
+package project.istic.com.fetedelascience.util;
 
 import android.database.CharArrayBuffer;
 import android.database.Cursor;

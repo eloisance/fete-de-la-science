@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,8 +24,8 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.adapter.FilteredCursor;
-import project.istic.com.fetedelascience.adapter.FilteredCursorFactory;
+import project.istic.com.fetedelascience.util.FilteredCursor;
+import project.istic.com.fetedelascience.util.FilteredCursorFactory;
 import project.istic.com.fetedelascience.adapter.MyEventRecyclerViewAdapter;
 import project.istic.com.fetedelascience.helper.DBManager;
 import project.istic.com.fetedelascience.model.Event;

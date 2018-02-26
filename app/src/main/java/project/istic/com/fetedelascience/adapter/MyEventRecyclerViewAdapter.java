@@ -4,21 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.j256.ormlite.stmt.PreparedQuery;
 
-import java.util.List;
-
 import project.istic.com.fetedelascience.R;
 import project.istic.com.fetedelascience.activity.DetailEventActivity;
 import project.istic.com.fetedelascience.model.Event;
+import project.istic.com.fetedelascience.util.OrmliteCursorRecyclerViewAdapter;
 
 public class MyEventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, MyEventRecyclerViewAdapter.ViewHolder> {
 
