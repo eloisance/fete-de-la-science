@@ -45,7 +45,7 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.CreateParcours" />
-
+        <activity android:name=".activity.MapListClusterActivity"></activity>
     </application>
 
 </manifest>

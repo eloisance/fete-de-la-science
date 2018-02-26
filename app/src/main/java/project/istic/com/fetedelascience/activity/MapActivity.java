@@ -21,6 +21,7 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -115,7 +116,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         googleMap.setOnMarkerClickListener(this.mClusterManager);
         this.mClusterManager.setOnClusterClickListener(this);
         this.mClusterManager.setOnClusterItemClickListener(this);
-        mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MyCustomAdapterForClusters());
         this.mClusterManager.setOnClusterItemInfoWindowClickListener(this);
         this.mClusterManager.setOnClusterInfoWindowClickListener(this);
         googleMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
@@ -134,23 +134,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 //= cluster.getItems().iterator().next().getTitle();
         //Log.d("CLUSTER", title); //String title =
         // Create the builder to collect all essential cluster items for the bounds.
-        LatLngBounds.Builder builder = LatLngBounds.builder();
-        for (ClusterItem item : cluster.getItems()) {
-            Log.d("ITEM", item.getTitle());
-            title += item.getTitle() + "\n";
-            builder.include(item.getPosition());
+
+        if(cluster.getSize() > 200) {
+            return false;
         }
-        Toast.makeText(this, "Nombre d'ateliers : " + cluster.getSize() + "\n" + title + "", Toast.LENGTH_SHORT).show();
-        // Get the LatLngBounds
-        //final LatLngBounds bounds = builder.build();
 
-        // Animate camera to the bounds
-//        try {
-//            this.mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+        ArrayList<Event> events = new ArrayList<>();
+        LatLngBounds.Builder builder = LatLngBounds.builder();
+        for (MapItem item : cluster.getItems()) {
+           events.add(item.getEvent());
+        }
+        Intent intent = new Intent(this, MapListClusterActivity.class);
+        intent.putParcelableArrayListExtra("events", events);
+        this.startActivity(intent);
         return true;
     }
 
@@ -182,46 +178,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.startActivity(intent);
     }
 
-    public class MyCustomAdapterForClusters implements GoogleMap.InfoWindowAdapter {
 
-        //@BindView(R.id.info)
-        private final View myContentsView;
-
-        @BindView(R.id.txtTitle) TextView title;
-        @BindView(R.id.txtSnippet) TextView snippet;
-
-
-        MyCustomAdapterForClusters() {
-            myContentsView = getLayoutInflater().inflate(
-                    R.layout.info_windows, null);
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-            return null;
-        }
-
-        @Override
-        public View getInfoWindow(Marker marker) {
-            // TODO Auto-generated method stub
-
-
-//            TextView tvTitle = ((TextView) myContentsView
-//                    .findViewById(R.id.txtTitle));
-//            TextView tvSnippet = ((TextView) myContentsView
-//                    .findViewById(R.id.txtSnippet));
-            title.setText(marker.getTitle());
-            snippet.setText(marker.getSnippet());
-            snippet.setVisibility(View.GONE);
-
-//            if (clickedCluster != null) {
-//                tvTitle.setText(String
-//                        .valueOf(clickedCluster.getItems().size())
-//                        + " more offers available");
-//            }
-            return myContentsView;
-        }
-    }
 
 
 }
