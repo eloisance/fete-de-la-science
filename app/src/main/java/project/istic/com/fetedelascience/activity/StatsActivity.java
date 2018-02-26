@@ -88,11 +88,16 @@ public class StatsActivity  extends AppCompatActivity {
                             noteMoyenne += Double.parseDouble(note);
                         }
                     }
+                    noteMoyenne= (double)Math.round((noteMoyenne / notes.size() )*10)/10;
+                    Log.d("NOTESBUG", "notemoyenne: " + noteMoyenne);
                     Integer count = (Integer) notesGlobales.get(noteMoyenne);
+
                     if (count == null) {
                         notesGlobales.put(noteMoyenne, 1);
                     } else {
-                        notesGlobales.put(noteMoyenne, count++);
+                        Log.d("NOTESBUG", "count : " + count);
+                        notesGlobales.put(noteMoyenne, notesGlobales.get(noteMoyenne) + 1);
+                        Log.d("NOTESBUG", "else");
                     }
                 }
 
@@ -100,9 +105,12 @@ public class StatsActivity  extends AppCompatActivity {
                 List<BarEntry> entries = new ArrayList<BarEntry>();
                 // turn your data into Entry objects
                 for (HashMap.Entry<Double, Integer> data : notesGlobales.entrySet()) {
-                    entries.add(new BarEntry(data.hashCode(), data.getValue()));
+                    Log.d("ENTRYVALUE", "" + data.getValue());
+                    Log.d("ENTRYKEY", data.getKey().toString());
+                    //Log.d("ENTRYHASH", data.hashCode());
+                    entries.add(new BarEntry(data.getKey().floatValue(), data.getValue()));
                 }
-                BarDataSet dataSet = new BarDataSet(entries, "Répartition des notes");
+                BarDataSet dataSet = new BarDataSet(entries, "Répartition des notes moyennes");
                 //dataSet.setColor(0);
                 //dataSet.setValueTextColor(1);
 
