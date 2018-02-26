@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -56,7 +58,7 @@ public class StatsActivity  extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        setTitle("Statistiques des notes des événements");
+        setTitle("Statistiques des notes moyennes des événements");
         if(getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -113,9 +115,36 @@ public class StatsActivity  extends AppCompatActivity {
                 BarDataSet dataSet = new BarDataSet(entries, "Répartition des notes moyennes");
                 //dataSet.setColor(0);
                 //dataSet.setValueTextColor(1);
+                //dataSet.setColor(R.color.colorAccent);
+                //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                dataSet.setDrawValues(false);
+                //dataSet.setBarBorderWidth(2);
+                        //
 
                 BarData barData = new BarData(dataSet);
+                barData.setBarWidth(0.1f);
+                Log.d("CHART", "width"+ barData.getBarWidth());
+                Description descp = new Description();
+                descp.setText("Répartition des notes moyennes");
+                chart.setDescription(descp);
+                chart.getDescription().setEnabled(false);
                 chart.setData(barData);
+                chart.setDrawValueAboveBar(false);
+
+                chart.setPinchZoom(false);
+
+                chart.setDrawBarShadow(false);
+                chart.setDrawGridBackground(false);
+
+                XAxis xAxis = chart.getXAxis();
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setDrawGridLines(false);
+
+                chart.getAxisLeft().setDrawGridLines(false);
+                chart.getLegend().setEnabled(false);
+
+
+
                 chart.invalidate();
                 Log.d("NOTES", notesGlobales.toString());
             }
