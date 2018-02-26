@@ -67,7 +67,7 @@ public class DetailParcoursActivity extends AppCompatActivity {
         }
 
         parcours = this.getIntent().getParcelableExtra("parcours");
-//        Picasso.with(getBaseContext()).load(this.event.getApercu()).into(imageEvent);
+//        Picasso.with(getBaseContext()).load(this.event.getImage()).into(imageEvent);
         if(parcours == null) {
             finish();
             return;

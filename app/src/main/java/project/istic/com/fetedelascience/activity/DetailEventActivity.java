@@ -3,20 +3,18 @@ package project.istic.com.fetedelascience.activity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import project.istic.com.fetedelascience.R;
-import project.istic.com.fetedelascience.global.Constants;
 import project.istic.com.fetedelascience.model.Event;
 
 import android.content.Intent;
 import android.provider.Settings;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -27,8 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -68,8 +66,8 @@ public class DetailEventActivity extends AppCompatActivity {
     @BindView(R.id.cardview_organisateur)
     CardView cardViewOrganisateur;
 
-//    @BindView(R.id.imageEvent)
-//    ImageView imageEvent;
+    @BindView(R.id.detail_event_image)
+    ImageView imageEvent;
 
     Event event;
 
@@ -90,7 +88,7 @@ public class DetailEventActivity extends AppCompatActivity {
         }
 
         event = this.getIntent().getParcelableExtra("event");
-//        Picasso.with(getBaseContext()).load(this.event.getApercu()).into(imageEvent);
+        Picasso.with(getBaseContext()).load(this.event.getImage()).into(imageEvent);
         if(event == null) {
             finish();
             return;

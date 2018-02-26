@@ -66,11 +66,11 @@ public class Event implements Parcelable {
      * Peut être null
      */
     @DatabaseField
-    private String apercu;
+    private String image;
 
     public Event() {}
 
-    public Event(int id, String title, String ville, String adresse, String lien, String description, String date_debut, String date_fin, String apercu,String resume_dates_fr) {
+    public Event(int id, String title, String ville, String adresse, String lien, String description, String date_debut, String date_fin, String image, String resume_dates_fr) {
         setId(id);
         setTitle(title);
         setVille(ville);
@@ -79,7 +79,7 @@ public class Event implements Parcelable {
         setDescription(description);
         setDate_debut(date_debut);
         setDate_fin(date_fin);
-        setApercu(apercu);
+        setImage(image);
         setResume_dates_fr(resume_dates_fr);
     }
 
@@ -100,12 +100,12 @@ public class Event implements Parcelable {
         this.title = title;
     }
 
-    public String getApercu() {
-        return apercu;
+    public String getImage() {
+        return image;
     }
 
-    public void setApercu(String apercu) {
-        this.apercu = apercu;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getVille() {
@@ -191,7 +191,7 @@ public class Event implements Parcelable {
                 ", date_fin='" + date_fin + '\'' +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
-                ", apercu='" + apercu + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 
@@ -214,7 +214,7 @@ public class Event implements Parcelable {
         dest.writeString(this.resume_dates_fr);
         dest.writeValue(this.longitude);
         dest.writeValue(this.latitude);
-        dest.writeString(this.apercu);
+        dest.writeString(this.image);
     }
 
     protected Event(Parcel in) {
@@ -229,7 +229,7 @@ public class Event implements Parcelable {
         this.resume_dates_fr = in.readString();
         this.longitude = (Double) in.readValue(Double.class.getClassLoader());
         this.latitude = (Double) in.readValue(Double.class.getClassLoader());
-        this.apercu = in.readString();
+        this.image = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
