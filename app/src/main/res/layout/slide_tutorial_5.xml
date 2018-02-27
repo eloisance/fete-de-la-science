@@ -16,7 +16,7 @@
             android:layout_width="@dimen/tutorial_img_width_height"
             android:layout_height="@dimen/tutorial_img_width_height"
             android:layout_marginBottom="@dimen/tutorial_img_margin_bottom"
-            android:src="@android:drawable/btn_star_big_on" />
+            android:src="@drawable/ic_star_white_24dp" />
 
         <TextView
             android:layout_width="wrap_content"
